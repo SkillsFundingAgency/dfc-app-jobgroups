@@ -13,9 +13,6 @@ parameters:
   APIMPolicyPath: ''
   ApimImportScript: ''
   SpecificationPath: ''
-  UIFunctionalTestPackageJobGroups: ''
-  UIFunctionalTestProjectFolderJobGroups: ''
-  UIFunctionalTestCategoryJobGroups: ''
 
 steps:
 - checkout: dfc-devops
@@ -97,49 +94,3 @@ steps:
     ScriptPath: '$(Agent.BuildDirectory)/s/dfc-devops/PSCoreScripts/Set-ApimPolicy.ps1'
     ScriptArguments: '-PolicyScope operation -ApimResourceGroup ${{ parameters.SharedResourceGroupName }} -ApimServiceName ${{ parameters.ApimServiceName }} -PolicyFilePath "$(Agent.BuildDirectory)/dfc.app.jobgroups.apimpolicies/ApimPolicy-IsolatedAppServiceAsEventGridWebhookEndpoint.xml" -ApiId ${{ parameters.ApiId }} -OperationId post-api-webhook-receiveevents'
     azurePowerShellVersion: LatestVersion
-
-- task: ExtractFiles@1
-  displayName: Extract files
-  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
-  inputs:
-    archiveFilePatterns: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
-    destinationFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
-
-- powershell: |
-   Copy-Item -Path $(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests/appsettings.template.json -Destination $(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests/appsettings.json
-  displayName: 'Copy and convert appsettings.template.json to appsettings.json'
-  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
-
-- task: esfadevops.Tokenization.custom-build-task.Tokenization@0
-  displayName: 'Tokenization: Transform file appsettings.json'
-  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
-  inputs:
-    SourcePath: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
-    TargetFileNames: appsettings.json
-
-- task: esfadevops.Tokenization.custom-build-task.Tokenization@0
-  displayName: 'Tokenization: Transform file appsettings.json'
-  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
-  inputs:
-    SourcePath: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
-    TargetFileNames: appsettings.json
-
-- task: VSTest@2
-  displayName: 'VsTest - testAssemblies  (dfc-api-ui-functionaltests-jobgroups)'
-  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
-  inputs:
-    testAssemblyVer2: |
-     **\*Tests.dll
-     !**\*TestAdapter.dll
-     !**\obj\**
-    searchFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
-    testFiltercriteria: 'Category=${{ parameters.UIFunctionalTestCategoryJobGroups }}'
-    otherConsoleOptions: '/Framework:.NETCoreApp,Version=v3.1'
-  continueOnError: true
-
-- task: DeleteFiles@1
-  displayName: 'Delete appsettings.json'
-  condition: in('${{ parameters.EnvironmentName }}', 'DeployToDevAppJobGroups', 'DeployToSitAppJobGroups', 'DeployToPPAppJobGroups')
-  inputs:
-    SourceFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
-    Contents: appsettings.json

@@ -82,6 +82,22 @@ jobs:
             UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
             UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
 
+- deployment: DeployUIFunctionalTestsTo_${{ parameters.EnvironmentName }}
+  displayName: "Deploy ui functional tests"
+  environment: ${{ parameters.EnvironmentName }}
+  dependsOn:
+  - DeployApplication
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - template: ../StepTemplates/run-functional-tests.yml
+          parameters:
+            environment: ${{ parameters.EnvironmentName }}
+            UIFunctionalTestPackageJobGroups: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
+            UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
+            UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
+
 - deployment: DeployRegistration
   displayName: "Deploy page registration"
   environment: ${{ parameters.EnvironmentName }}
