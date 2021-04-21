@@ -82,7 +82,7 @@ jobs:
             UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
             UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
 
-- deployment: DeployUIFunctionalTestsTo_${{ parameters.EnvironmentName }}
+- deployment: DeployUIFunctionalTests
   displayName: "Deploy ui functional tests"
   environment: ${{ parameters.EnvironmentName }}
   dependsOn:
