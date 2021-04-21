@@ -15,7 +15,7 @@ parameters:
   UIFunctionalTestPackageJobGroups: ''
   UIFunctionalTestProjectFolderJobGroups: ''
   UIFunctionalTestCategoryJobGroups: ''
-  
+
 steps:
 - checkout: dfc-devops
   path: 's/dfc-devops/'
@@ -142,4 +142,3 @@ steps:
   inputs:
     SourceFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     Contents: appsettings.json
-  condition: always()
