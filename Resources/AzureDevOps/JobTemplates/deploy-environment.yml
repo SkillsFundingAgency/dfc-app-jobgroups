@@ -83,7 +83,7 @@ jobs:
             UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
 
 - deployment: DeployUIFunctionalTests
-  displayName: "Deploy ui functional tests dev"
+  displayName: "Deploy ui functional tests"
   environment: ${{ parameters.EnvironmentName }}
   dependsOn:
   - DeployApplication
@@ -91,23 +91,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - template: ../StepTemplates/run-functional-tests-dev.yml
-          parameters:
-            environment: ${{ parameters.EnvironmentName }}
-            UIFunctionalTestPackageJobGroups: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
-            UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
-            UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
-
-- deployment: DeployUIFunctionalTests
-  displayName: "Deploy ui functional tests sit"
-  environment: ${{ parameters.EnvironmentName }}
-  dependsOn:
-  - DeployApplication
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - template: ../StepTemplates/run-functional-tests-sit.yml
+        - template: ../StepTemplates/run-functional-tests.yml
           parameters:
             environment: ${{ parameters.EnvironmentName }}
             UIFunctionalTestPackageJobGroups: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
