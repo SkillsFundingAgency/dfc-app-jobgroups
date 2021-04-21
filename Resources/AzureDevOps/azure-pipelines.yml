@@ -202,6 +202,14 @@ stages:
   - group: dfc-app-shared-registration
   - group: dfc-stax-shared-sit
   - group: dfc-compositeui-all
+  - group: dfc-app-uiautomation-browser-all
+  - group: dfc-app-uiautomation-browser-arguments-all
+  - group: dfc-app-uiautomation-browserstack-all
+  - group: dfc-app-uiautomation-browserstack-sit
+  - group: dfc-app-uiautomation-testexecution-timeout-all
+  - group: dfc-app-uiautomation-testexecution-retry-all
+  - group: dfc-browserstack
+  - group: dfc-app-uiautomation-sit
   - template: VariableTemplates\SitEnvironmentVariables.yml
   
   jobs:
@@ -234,6 +242,9 @@ stages:
       APIMPolicyPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.ApimPolicies/"
       ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
+      UIFunctionalTestPackageJobGroups: "$(Pipeline.Workspace)/DFC.App.JobGroups.UI.FunctionalTests.DeploymentPackages/DFC.App.JobGroups.zip"
+      UIFunctionalTestProjectFolderJobGroups: "$(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests"
+      UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToSitDraftAppJobGroups
   condition: succeeded()

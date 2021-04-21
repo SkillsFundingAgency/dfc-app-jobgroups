@@ -15,7 +15,7 @@ parameters:
   UIFunctionalTestPackageJobGroups: ''
   UIFunctionalTestProjectFolderJobGroups: ''
   UIFunctionalTestCategoryJobGroups: ''
-
+  
 steps:
 - checkout: dfc-devops
   path: 's/dfc-devops/'
@@ -99,6 +99,7 @@ steps:
 
 - task: ExtractFiles@1
   displayName: Extract files
+  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
   inputs:
     archiveFilePatterns: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
     destinationFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
@@ -106,21 +107,25 @@ steps:
 - powershell: |
    Copy-Item -Path $(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests/appsettings.template.json -Destination $(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests/appsettings.json
   displayName: 'Copy and convert appsettings.template.json to appsettings.json'
+  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
 
 - task: esfadevops.Tokenization.custom-build-task.Tokenization@0
   displayName: 'Tokenization: Transform file appsettings.json'
+  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
   inputs:
     SourcePath: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     TargetFileNames: appsettings.json
 
 - task: esfadevops.Tokenization.custom-build-task.Tokenization@0
   displayName: 'Tokenization: Transform file appsettings.json'
+  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
   inputs:
     SourcePath: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     TargetFileNames: appsettings.json
 
 - task: VSTest@2
   displayName: 'VsTest - testAssemblies  (dfc-api-ui-functionaltests-jobgroups)'
+  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
   inputs:
     testAssemblyVer2: |
      **\*Tests.dll
@@ -133,6 +138,7 @@ steps:
 
 - task: DeleteFiles@1
   displayName: 'Delete appsettings.json'
+  condition: in('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
   inputs:
     SourceFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     Contents: appsettings.json
