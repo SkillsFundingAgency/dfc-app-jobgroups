@@ -102,6 +102,14 @@ stages:
   - group: dfc-app-shared-registration
   - group: dfc-stax-shared-dev
   - group: dfc-compositeui-all
+  - group: dfc-app-uiautomation-browser-all
+  - group: dfc-app-uiautomation-browser-arguments-all
+  - group: dfc-app-uiautomation-browserstack-all
+  - group: dfc-app-uiautomation-browserstack-dev
+  - group: dfc-app-uiautomation-testexecution-timeout-all
+  - group: dfc-app-uiautomation-testexecution-retry-all
+  - group: dfc-browserstack
+  - group: dfc-app-uiautomation-dev
   - template: VariableTemplates\DevEnvironmentVariables.yml
   
   jobs:
