@@ -6,6 +6,7 @@ parameters:
   PackageFile: ''
   SharedResourceGroupName: ''
   ApimServiceName: ''
+  EnvironmentName: ''
   ApimProductInstanceName: ''
   ApiName: ''
   ApiId: ''
@@ -99,7 +100,7 @@ steps:
 
 - task: ExtractFiles@1
   displayName: Extract files
-  condition: eq('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
+  condition: in('${{ parameters.EnvironmentName }}', 'DeployToDevAppJobGroups', 'DeployToSitAppJobGroups', 'DeployToPPAppJobGroups')
   inputs:
     archiveFilePatterns: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
     destinationFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
@@ -107,25 +108,25 @@ steps:
 - powershell: |
    Copy-Item -Path $(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests/appsettings.template.json -Destination $(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests/appsettings.json
   displayName: 'Copy and convert appsettings.template.json to appsettings.json'
-  condition: eq('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
+  condition: in('${{ parameters.EnvironmentName }}', 'DeployToDevAppJobGroups', 'DeployToSitAppJobGroups', 'DeployToPPAppJobGroups')
 
 - task: esfadevops.Tokenization.custom-build-task.Tokenization@0
   displayName: 'Tokenization: Transform file appsettings.json'
-  condition: eq('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
+  condition: in('${{ parameters.EnvironmentName }}', 'DeployToDevAppJobGroups', 'DeployToSitAppJobGroups', 'DeployToPPAppJobGroups')
   inputs:
     SourcePath: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     TargetFileNames: appsettings.json
 
 - task: esfadevops.Tokenization.custom-build-task.Tokenization@0
   displayName: 'Tokenization: Transform file appsettings.json'
-  condition: eq('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
+  condition: in('${{ parameters.EnvironmentName }}', 'DeployToDevAppJobGroups', 'DeployToSitAppJobGroups', 'DeployToPPAppJobGroups')
   inputs:
     SourcePath: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     TargetFileNames: appsettings.json
 
 - task: VSTest@2
   displayName: 'VsTest - testAssemblies  (dfc-api-ui-functionaltests-jobgroups)'
-  condition: eq('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
+  condition: in('${{ parameters.EnvironmentName }}', 'DeployToDevAppJobGroups', 'DeployToSitAppJobGroups', 'DeployToPPAppJobGroups')
   inputs:
     testAssemblyVer2: |
      **\*Tests.dll
@@ -138,7 +139,7 @@ steps:
 
 - task: DeleteFiles@1
   displayName: 'Delete appsettings.json'
-  condition: eq('${{ parameters.EnvironmentName }}', 'DEV_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups')
+  condition: in('${{ parameters.EnvironmentName }}', 'DeployToDevAppJobGroups', 'DeployToSitAppJobGroups', 'DeployToPPAppJobGroups')
   inputs:
     SourceFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     Contents: appsettings.json
