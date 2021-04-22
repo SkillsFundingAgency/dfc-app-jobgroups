@@ -82,22 +82,6 @@ jobs:
             UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
             UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
 
-- deployment: DeployUIFunctionalTests
-  displayName: "Deploy ui functional tests"
-  environment: ${{ parameters.EnvironmentName }}
-  dependsOn:
-  - DeployApplication
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - template: ../StepTemplates/run-functional-tests.yml
-          parameters:
-            environment: ${{ parameters.EnvironmentName }}
-            UIFunctionalTestPackageJobGroups: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
-            UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
-            UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
-
 - deployment: DeployRegistration
   displayName: "Deploy page registration"
   environment: ${{ parameters.EnvironmentName }}
@@ -114,3 +98,19 @@ jobs:
             PageRegistrationFile: '${{ parameters.PageRegistrationFile }}'
             AppRegistryApiUrl: '${{ parameters.AppRegistryApiUrl }}'
             ApimCompositeKey: '${{ parameters.ApimCompositeKey }}'
+
+- deployment: DeployUIFunctionalTests
+  displayName: "Deploy ui functional tests"
+  environment: ${{ parameters.EnvironmentName }}
+  dependsOn:
+  - DeployApplication
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - template: ../StepTemplates/run-functional-tests.yml
+          parameters:
+            environment: ${{ parameters.EnvironmentName }}
+            UIFunctionalTestPackageJobGroups: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
+            UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
+            UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'

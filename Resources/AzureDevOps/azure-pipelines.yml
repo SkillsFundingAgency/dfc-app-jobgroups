@@ -93,7 +93,6 @@ stages:
         DotNetCoreVersion: '3.1.100'
 
 - stage: DeployToDevAppJobGroups
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_AppJobGroups
   variables:
   - group: dfc-shared-all

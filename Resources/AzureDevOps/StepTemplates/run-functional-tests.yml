@@ -44,3 +44,4 @@ steps:
   inputs:
     SourceFolder: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
     Contents: appsettings.json
+  condition: always()
