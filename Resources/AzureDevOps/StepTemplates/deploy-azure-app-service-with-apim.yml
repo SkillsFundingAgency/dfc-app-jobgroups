@@ -6,6 +6,7 @@ parameters:
   PackageFile: ''
   SharedResourceGroupName: ''
   ApimServiceName: ''
+  EnvironmentName: ''
   ApimProductInstanceName: ''
   ApiName: ''
   ApiId: ''

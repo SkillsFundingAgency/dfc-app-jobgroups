@@ -27,6 +27,9 @@ parameters:
   APIMPolicyPath: ''
   ApimImportScript: ''
   SpecificationPath: ''
+  UIFunctionalTestPackageJobGroups: ''
+  UIFunctionalTestProjectFolderJobGroups: ''
+  UIFunctionalTestCategoryJobGroups: ''
 
 jobs:
 - deployment: DeployTemplate
@@ -75,6 +78,9 @@ jobs:
             APIMPolicyPath: '${{ parameters.APIMPolicyPath }}'
             ApimImportScript: '${{ parameters.ApimImportScript }}'
             SpecificationPath:  '${{ parameters.SpecificationPath }}'
+            UIFunctionalTestPackageJobGroups: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
+            UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
+            UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'
 
 - deployment: DeployRegistration
   displayName: "Deploy page registration"
@@ -92,3 +98,19 @@ jobs:
             PageRegistrationFile: '${{ parameters.PageRegistrationFile }}'
             AppRegistryApiUrl: '${{ parameters.AppRegistryApiUrl }}'
             ApimCompositeKey: '${{ parameters.ApimCompositeKey }}'
+
+- deployment: DeployUIFunctionalTests
+  displayName: "Deploy ui functional tests"
+  environment: ${{ parameters.EnvironmentName }}
+  dependsOn:
+  - DeployApplication
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - template: ../StepTemplates/run-functional-tests.yml
+          parameters:
+            environment: ${{ parameters.EnvironmentName }}
+            UIFunctionalTestPackageJobGroups: '${{ parameters.UIFunctionalTestPackageJobGroups }}'
+            UIFunctionalTestProjectFolderJobGroups: '${{ parameters.UIFunctionalTestProjectFolderJobGroups }}'
+            UIFunctionalTestCategoryJobGroups: '${{ parameters.UIFunctionalTestCategoryJobGroups }}'

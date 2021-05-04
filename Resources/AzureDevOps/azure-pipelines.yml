@@ -80,6 +80,18 @@ stages:
         PublishWebApp: true
         TestSuffix: UnitTests
 
+  #Build UI functional Tests
+  - job: Builduifunctionaltests
+    displayName: Build UI functional tests
+    steps:
+# Build all UI Functional Tests that ends with UI.FunctionalTests
+    - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
+      parameters:
+        SolutionBaseName: $(SolutionBaseName).UI.FunctionalTests
+        BuildPlatform: $(BuildPlatform)
+        BuildConfiguration: $(BuildConfiguration)
+        DotNetCoreVersion: '3.1.100'
+
 - stage: DeployToDevAppJobGroups
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_AppJobGroups
@@ -91,6 +103,14 @@ stages:
   - group: dfc-app-shared-registration
   - group: dfc-stax-shared-dev
   - group: dfc-compositeui-all
+  - group: dfc-app-uiautomation-browser-all
+  - group: dfc-app-uiautomation-browser-arguments-all
+  - group: dfc-app-uiautomation-browserstack-all
+  - group: dfc-app-uiautomation-browserstack-dev
+  - group: dfc-app-uiautomation-testexecution-timeout-all
+  - group: dfc-app-uiautomation-testexecution-retry-all
+  - group: dfc-browserstack
+  - group: dfc-app-uiautomation-dev
   - template: VariableTemplates\DevEnvironmentVariables.yml
   
   jobs:
@@ -123,6 +143,9 @@ stages:
       APIMPolicyPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.ApimPolicies/"
       ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
+      UIFunctionalTestPackageJobGroups: "$(Pipeline.Workspace)/DFC.App.JobGroups.UI.FunctionalTests.DeploymentPackages/DFC.App.JobGroups.zip"
+      UIFunctionalTestProjectFolderJobGroups: "$(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests"
+      UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToDevDraftAppJobGroups
   condition: succeeded()
@@ -136,6 +159,14 @@ stages:
   - group: dfc-app-shared-registration-draft
   - group: dfc-stax-shared-dev
   - group: dfc-compositeui-all
+  - group: dfc-app-uiautomation-browser-all
+  - group: dfc-app-uiautomation-browser-arguments-all
+  - group: dfc-app-uiautomation-browserstack-all
+  - group: dfc-app-uiautomation-browserstack-dev
+  - group: dfc-app-uiautomation-testexecution-timeout-all
+  - group: dfc-app-uiautomation-testexecution-retry-all
+  - group: dfc-browserstack
+  - group: dfc-app-uiautomation-dev
   - template: VariableTemplates\DevDraftEnvironmentVariables.yml
   
   jobs:
@@ -168,6 +199,9 @@ stages:
       APIMPolicyPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.ApimPolicies/"
       ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
+      UIFunctionalTestPackageJobGroups: "$(Pipeline.Workspace)/DFC.App.JobGroups.UI.FunctionalTests.DeploymentPackages/DFC.App.JobGroups.zip"
+      UIFunctionalTestProjectFolderJobGroups: "$(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests"
+      UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToSitAppJobGroups
   condition: succeeded()
@@ -180,6 +214,14 @@ stages:
   - group: dfc-app-shared-registration
   - group: dfc-stax-shared-sit
   - group: dfc-compositeui-all
+  - group: dfc-app-uiautomation-browser-all
+  - group: dfc-app-uiautomation-browser-arguments-all
+  - group: dfc-app-uiautomation-browserstack-all
+  - group: dfc-app-uiautomation-browserstack-sit
+  - group: dfc-app-uiautomation-testexecution-timeout-all
+  - group: dfc-app-uiautomation-testexecution-retry-all
+  - group: dfc-browserstack
+  - group: dfc-app-uiautomation-sit
   - template: VariableTemplates\SitEnvironmentVariables.yml
   
   jobs:
@@ -212,6 +254,9 @@ stages:
       APIMPolicyPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.ApimPolicies/"
       ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
+      UIFunctionalTestPackageJobGroups: "$(Pipeline.Workspace)/DFC.App.JobGroups.UI.FunctionalTests.DeploymentPackages/DFC.App.JobGroups.zip"
+      UIFunctionalTestProjectFolderJobGroups: "$(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests"
+      UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToSitDraftAppJobGroups
   condition: succeeded()
@@ -225,6 +270,14 @@ stages:
   - group: dfc-app-shared-registration-draft
   - group: dfc-stax-shared-sit
   - group: dfc-compositeui-all
+  - group: dfc-app-uiautomation-browser-all
+  - group: dfc-app-uiautomation-browser-arguments-all
+  - group: dfc-app-uiautomation-browserstack-all
+  - group: dfc-app-uiautomation-browserstack-sit
+  - group: dfc-app-uiautomation-testexecution-timeout-all
+  - group: dfc-app-uiautomation-testexecution-retry-all
+  - group: dfc-browserstack
+  - group: dfc-app-uiautomation-sit
   - template: VariableTemplates\SitDraftEnvironmentVariables.yml
   
   jobs:
@@ -257,6 +310,9 @@ stages:
       APIMPolicyPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.ApimPolicies/"
       ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
+      UIFunctionalTestPackageJobGroups: "$(Pipeline.Workspace)/DFC.App.JobGroups.UI.FunctionalTests.DeploymentPackages/DFC.App.JobGroups.zip"
+      UIFunctionalTestProjectFolderJobGroups: "$(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests"
+      UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPPAppJobGroups
   condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))

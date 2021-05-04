@@ -13,7 +13,10 @@
             </div>
         </div>
         <div class="panel-footer">
-            <p class="govuk-body-m govuk-!-margin-bottom-1">Leading to: @Model.JobsCreated.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture) @Html.Raw(Model.NewOrLostString) jobs by @Model.EndYearRange</p>
+            <p class="govuk-body-m govuk-!-margin-bottom-1">
+                <span class="govuk-!-font-weight-bold">Leading to:</span>                
+                @Model.JobsCreatedAbsoluteValue.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture) @Html.Raw(Model.NewOrLostString) jobs by @Model.EndYearRange
+            </p>
         </div>
     </div>
 

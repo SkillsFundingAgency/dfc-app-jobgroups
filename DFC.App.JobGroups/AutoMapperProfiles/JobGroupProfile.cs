@@ -54,6 +54,7 @@ namespace DFC.App.JobGroups.AutoMapperProfiles
             CreateMap<JobProfileModel, JobProfileViewModel>();
 
             CreateMap<JobGrowthPredictionModel, JobGrowthViewModel>()
+                .ForMember(d => d.JobsCreatedAbsoluteValue, s => s.MapFrom(a => Math.Abs(a.JobsCreated)))
                 .ForMember(d => d.GraphicClassName, s => s.MapFrom(a => a.JobsCreated >= 0 ? "job-growth" : "job-decline"))
                 .ForMember(d => d.GrowthDeclineString, s => s.MapFrom(a => a.JobsCreated >= 0 ? "Job growth" : "Job decline"))
                 .ForMember(d => d.NewOrLostString, s => s.MapFrom(a => a.JobsCreated >= 0 ? "new" : "fewer"));
