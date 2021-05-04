@@ -31,10 +31,8 @@ namespace DFC.App.JobGroups.Services.CacheContentService
 
         public async Task<HttpStatusCode> ReloadAsync(Uri url)
         {
-            var fullUrl = new Uri($"{url}/{jobGroupDraftApiClientOptions.SummaryEndpoint}", UriKind.Absolute);
-
-            logger.LogInformation($"Refreshing all Job Groups from {fullUrl}");
-            var summaries = await jobGroupApiConnector.GetSummaryAsync(fullUrl).ConfigureAwait(false);
+            logger.LogInformation($"Refreshing all Job Groups from {url}");
+            var summaries = await jobGroupApiConnector.GetSummaryAsync(url).ConfigureAwait(false);
 
             if (summaries != null && summaries.Any())
             {
@@ -42,10 +40,10 @@ namespace DFC.App.JobGroups.Services.CacheContentService
 
                 foreach (var item in summaries)
                 {
-                    await ReloadItemAsync(new Uri($"{url}/{jobGroupDraftApiClientOptions.DetailEndpoint}/{item.Id}", UriKind.Absolute)).ConfigureAwait(false);
+                    await ReloadItemAsync(new Uri($"{url}/{item.Id}", UriKind.Absolute)).ConfigureAwait(false);
                 }
 
-                logger.LogInformation($"Refreshed all Job Groups from {fullUrl}");
+                logger.LogInformation($"Refreshed all Job Groups from {url}");
 
                 return HttpStatusCode.OK;
             }
@@ -65,6 +63,12 @@ namespace DFC.App.JobGroups.Services.CacheContentService
                 if (existingJobGroup != null)
                 {
                     jobGroupModel.Etag = existingJobGroup.Etag;
+
+                    if (jobGroupModel.Id != existingJobGroup.Id)
+                    {
+                        logger.LogInformation($"Deleting previous Job Groups item: {existingJobGroup.Id} / {jobGroupModel.Soc} / {url}");
+                        await jobGroupDocumentService.DeleteAsync(existingJobGroup.Id).ConfigureAwait(false);
+                    }
                 }
 
                 logger.LogInformation($"Upserting Job Groups item: {jobGroupModel.Soc} / {url}");

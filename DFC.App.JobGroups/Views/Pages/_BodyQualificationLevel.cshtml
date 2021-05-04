@@ -6,13 +6,11 @@
 @if (Model != null)
 {
     <div class="dfc-app-lmi-panel panel-green panel-qualifications">
-        <div class="panel-header">
-            <div class="govuk-grid-column-one-quarter panel-section-levels">
-                <span class="govuk-!-font-size-19">Level</span> @Html.Raw(Model.LevelNumberFromName)
-            </div>
-            <div class="panel-section-description govuk-grid-column-three-quarters">
-                <partial name="_BodyQualificationLevel_@Model.LevelNumberFromName" />
-            </div>
+        <div class="govuk-grid-column-one-quarter panel-section-levels">
+            <span class="govuk-!-font-size-19">Level</span> @Html.Raw(Model.LevelNumberFromName)
         </div>
-    </div>
+        <div class="panel-section-description govuk-grid-column-three-quarters">
+            <partial name="_BodyQualificationLevel_@Model.LevelNumberFromName" />
+        </div>
+</div>
 }

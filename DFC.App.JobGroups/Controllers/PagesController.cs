@@ -18,10 +18,9 @@ namespace DFC.App.JobGroups.Controllers
 {
     public class PagesController : Controller
     {
-        public const string BradcrumbTitle = "Job group LMI";
         public const string RegistrationPath = "job-groups";
         public const string LocalPath = "pages";
-        public const string DefaultPageTitleSuffix = BradcrumbTitle + " | National Careers Service";
+        public const string DefaultPageTitleSuffix = "Job group LMI | National Careers Service";
         public const string PageTitleSuffix = " | " + DefaultPageTitleSuffix;
 
         private readonly ILogger<PagesController> logger;
@@ -85,7 +84,7 @@ namespace DFC.App.JobGroups.Controllers
             {
                 var viewModel = mapper.Map<DocumentViewModel>(jobGroupModel);
 
-                viewModel.Breadcrumb = BuildBreadcrumb(LocalPath, null);
+                viewModel.Breadcrumb = BuildBreadcrumb(LocalPath, null, jobGroupModel.Title);
                 viewModel.HtmlHead.CanonicalUrl = new Uri($"{Request.GetBaseAddress()}{LocalPath}/{jobGroupModel.Soc}", UriKind.RelativeOrAbsolute);
 
                 logger.LogInformation($"{nameof(Document)} has succeeded for: {soc}");
@@ -139,7 +138,7 @@ namespace DFC.App.JobGroups.Controllers
                     };
                 }
 
-                var viewModel = BuildBreadcrumb(RegistrationPath, breadcrumbItemModel);
+                var viewModel = BuildBreadcrumb(RegistrationPath, breadcrumbItemModel, jobGroupModel.Title);
 
                 logger.LogInformation($"{nameof(Breadcrumb)} has succeeded for: {socRequest.Soc}");
 
@@ -209,7 +208,7 @@ namespace DFC.App.JobGroups.Controllers
             return NoContent();
         }
 
-        private static BreadcrumbViewModel BuildBreadcrumb(string segmentPath, BreadcrumbItemModel? jpBreadcrumbItemModel)
+        private static BreadcrumbViewModel BuildBreadcrumb(string segmentPath, BreadcrumbItemModel? jpBreadcrumbItemModel, string jobGroupTitle)
         {
             var viewModel = new BreadcrumbViewModel
             {
@@ -218,7 +217,7 @@ namespace DFC.App.JobGroups.Controllers
                     new BreadcrumbItemViewModel()
                     {
                         Route = "/",
-                        Title = "Home: Explore careers",
+                        Title = "Home",
                     },
                 },
             };
@@ -238,7 +237,7 @@ namespace DFC.App.JobGroups.Controllers
             var finalPathViewModel = new BreadcrumbItemViewModel
             {
                 Route = $"/{segmentPath}",
-                Title = BradcrumbTitle,
+                Title = $"Job group: {jobGroupTitle}",
             };
 
             viewModel.Breadcrumbs.Add(finalPathViewModel);

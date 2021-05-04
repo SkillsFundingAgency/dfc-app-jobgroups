@@ -9,7 +9,7 @@ namespace DFC.App.JobGroups.ViewModels
 
         public int EndYearRange { get; set; }
 
-        public decimal JobsCreated { get; set; }
+        public decimal JobsCreatedAbsoluteValue { get; set; }
 
         public decimal PercentageGrowth { get; set; }
 

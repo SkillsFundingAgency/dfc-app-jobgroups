@@ -6,8 +6,5 @@ namespace DFC.App.JobGroups.Data.Models.ClientOptions
     [ExcludeFromCodeCoverage]
     public class JobGroupDraftApiClientOptions : ClientOptionsModel
     {
-        public string SummaryEndpoint { get; set; } = "summary";
-
-        public string DetailEndpoint { get; set; } = "detail";
     }
 }

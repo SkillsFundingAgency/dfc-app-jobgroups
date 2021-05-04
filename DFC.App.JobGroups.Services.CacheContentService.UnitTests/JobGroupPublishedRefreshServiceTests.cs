@@ -127,9 +127,11 @@ namespace DFC.App.JobGroups.Services.CacheContentService.UnitTests
             var existingJobGroup = A.Dummy<JobGroupModel>();
             var getDetailResponse = new JobGroupModel
             {
+                Id = Guid.NewGuid(),
                 Soc = 2,
                 Title = "A title 2",
             };
+            existingJobGroup.Id = Guid.NewGuid();
 
             A.CallTo(() => fakeJobGroupApiConnector.GetDetailsAsync(A<Uri>.Ignored)).Returns(getDetailResponse);
             A.CallTo(() => fakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(existingJobGroup);
@@ -141,6 +143,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.UnitTests
             // assert
             A.CallTo(() => fakeJobGroupApiConnector.GetDetailsAsync(A<Uri>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => fakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeJobGroupDocumentService.DeleteAsync(A<Guid>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => fakeJobGroupDocumentService.UpsertAsync(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
 
             Assert.Equal(expectedResult, result);
@@ -168,6 +171,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.UnitTests
             // assert
             A.CallTo(() => fakeJobGroupApiConnector.GetDetailsAsync(A<Uri>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => fakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => fakeJobGroupDocumentService.DeleteAsync(A<Guid>.Ignored)).MustNotHaveHappened();
             A.CallTo(() => fakeJobGroupDocumentService.UpsertAsync(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
 
             Assert.Equal(expectedResult, result);
@@ -188,6 +192,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.UnitTests
             // assert
             A.CallTo(() => fakeJobGroupApiConnector.GetDetailsAsync(A<Uri>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => fakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => fakeJobGroupDocumentService.DeleteAsync(A<Guid>.Ignored)).MustNotHaveHappened();
             A.CallTo(() => fakeJobGroupDocumentService.UpsertAsync(A<JobGroupModel>.Ignored)).MustNotHaveHappened();
 
             Assert.Equal(expectedResult, result);

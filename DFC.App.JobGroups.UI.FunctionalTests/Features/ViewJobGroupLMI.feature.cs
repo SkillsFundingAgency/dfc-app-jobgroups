@@ -83,12 +83,12 @@ namespace DFC.App.JobGroups.UI.FunctionalTests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Navigate to Job Group page")]
         [Xunit.TraitAttribute("FeatureTitle", "View Job Group LMI")]
         [Xunit.TraitAttribute("Description", "Navigate to Job Group page")]
-        [Xunit.TraitAttribute("Category", "JobGroup")]
+        [Xunit.TraitAttribute("Category", "JobGroups")]
         [Xunit.TraitAttribute("Category", "Smoke")]
         public virtual void NavigateToJobGroupPage()
         {
             string[] tagsOfScenario = new string[] {
-                    "JobGroup",
+                    "JobGroups",
                     "Smoke"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Job Group page", null, tagsOfScenario, argumentsOfScenario);
@@ -128,11 +128,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Job Growth information is displayed")]
         [Xunit.TraitAttribute("FeatureTitle", "View Job Group LMI")]
         [Xunit.TraitAttribute("Description", "Job Growth information is displayed")]
-        [Xunit.TraitAttribute("Category", "JobGroup")]
+        [Xunit.TraitAttribute("Category", "JobGroups")]
         public virtual void JobGrowthInformationIsDisplayed()
         {
             string[] tagsOfScenario = new string[] {
-                    "JobGroup"};
+                    "JobGroups"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Job Growth information is displayed", null, tagsOfScenario, argumentsOfScenario);
 #line 10
@@ -174,11 +174,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Qualifications information is displayed")]
         [Xunit.TraitAttribute("FeatureTitle", "View Job Group LMI")]
         [Xunit.TraitAttribute("Description", "Qualifications information is displayed")]
-        [Xunit.TraitAttribute("Category", "JobGroup")]
+        [Xunit.TraitAttribute("Category", "JobGroups")]
         public virtual void QualificationsInformationIsDisplayed()
         {
             string[] tagsOfScenario = new string[] {
-                    "JobGroup"};
+                    "JobGroups"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Qualifications information is displayed", null, tagsOfScenario, argumentsOfScenario);
 #line 17
@@ -220,11 +220,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Regional information is displayed")]
         [Xunit.TraitAttribute("FeatureTitle", "View Job Group LMI")]
         [Xunit.TraitAttribute("Description", "Regional information is displayed")]
-        [Xunit.TraitAttribute("Category", "JobGroup")]
+        [Xunit.TraitAttribute("Category", "JobGroups")]
         public virtual void RegionalInformationIsDisplayed()
         {
             string[] tagsOfScenario = new string[] {
-                    "JobGroup"};
+                    "JobGroups"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Regional information is displayed", null, tagsOfScenario, argumentsOfScenario);
 #line 24
@@ -266,11 +266,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableFactAttribute(DisplayName="Industry information is displayed")]
         [Xunit.TraitAttribute("FeatureTitle", "View Job Group LMI")]
         [Xunit.TraitAttribute("Description", "Industry information is displayed")]
-        [Xunit.TraitAttribute("Category", "JobGroup")]
+        [Xunit.TraitAttribute("Category", "JobGroups")]
         public virtual void IndustryInformationIsDisplayed()
         {
             string[] tagsOfScenario = new string[] {
-                    "JobGroup"};
+                    "JobGroups"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Industry information is displayed", null, tagsOfScenario, argumentsOfScenario);
 #line 31
