@@ -41,11 +41,11 @@ namespace DFC.App.JobGroups.UI.FunctionalTests.StepDefinitions
         }
 
         [Then(@"the (.*) information is displayed")]
-        public void ThenTheJobGrowthInformationIsDisplayed(string LMI)
+        public void ThenTheJobGrowthInformationIsDisplayed(string lMI)
         {
             By locator = null;
 
-            switch (LMI.ToLower(CultureInfo.CurrentCulture))
+            switch (lMI.ToLower(CultureInfo.CurrentCulture))
             {
                 case "job growth":
                     locator = By.CssSelector(".dfc-app-lmi-panel.panel-green");
@@ -70,6 +70,5 @@ namespace DFC.App.JobGroups.UI.FunctionalTests.StepDefinitions
 
             this.Context.GetHelperLibrary<AppSettings>().WebDriverWaitHelper.WaitForElementToBeDisplayed(locator);
         }
-
     }
 }
