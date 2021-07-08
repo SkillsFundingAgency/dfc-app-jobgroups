@@ -24,7 +24,6 @@ namespace DFC.App.JobGroups.UI.FunctionalTests.StepDefinitions
         [When(@"I click the (.*) link")]
         public void WhenIClickTheLink(string linkText)
         {
-
             var link = this.Context.GetWebDriver().FindElement(By.LinkText(linkText));
 
             if (!link.Displayed)
