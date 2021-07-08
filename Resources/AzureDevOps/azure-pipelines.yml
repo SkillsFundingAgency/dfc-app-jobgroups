@@ -370,7 +370,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPPDraftAppJobGroups
-  condition: and(eq(dependencies.DeployToPPAppJobGroups.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeededOrFailed()
   displayName: Deploy to PP-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -426,7 +426,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPRDAppJobGroups
-  condition: and(eq(dependencies.DeployToPPDraftAppJobGroups.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeededOrFailed()
   displayName: Deploy to PRD_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -481,7 +481,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPRDDraftAppJobGroups
-  condition: and(eq(dependencies.DeployToPRDAppJobGroups.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeededOrFailed()
   displayName: Deploy to PRD-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
