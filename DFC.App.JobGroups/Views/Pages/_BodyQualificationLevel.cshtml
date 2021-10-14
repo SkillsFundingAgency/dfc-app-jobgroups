@@ -12,5 +12,15 @@
         <div class="panel-section-description govuk-grid-column-three-quarters">
             <partial name="_BodyQualificationLevel_@Model.LevelNumberFromName" />
         </div>
-</div>
+    </div>
+}
+else
+{
+    <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            Qualification information is unavailable for this job group.
+        </strong>
+    </div>
 }
