@@ -12,5 +12,9 @@ namespace DFC.App.JobGroups.Data.Models.JobGroupModels
         public decimal JobsCreated { get; set; }
 
         public decimal PercentageGrowth { get; set; }
+
+        public decimal? Retirements { get; set; }
+
+        public decimal? PercentageRetirements { get; set; }
     }
 }
