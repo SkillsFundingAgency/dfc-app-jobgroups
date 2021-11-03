@@ -255,9 +255,6 @@ stages:
       APIMPolicyPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.ApimPolicies/"
       ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
-      UIFunctionalTestPackageJobGroups: "$(Pipeline.Workspace)/DFC.App.JobGroups.UI.FunctionalTests.DeploymentPackages/DFC.App.JobGroups.zip"
-      UIFunctionalTestProjectFolderJobGroups: "$(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests"
-      UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToDevDraftAppJobGroups
   condition: succeeded()
@@ -311,9 +308,6 @@ stages:
       APIMPolicyPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.ApimPolicies/"
       ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
-      UIFunctionalTestPackageJobGroups: "$(Pipeline.Workspace)/DFC.App.JobGroups.UI.FunctionalTests.DeploymentPackages/DFC.App.JobGroups.zip"
-      UIFunctionalTestProjectFolderJobGroups: "$(Pipeline.Workspace)/DFC.APP.JobGroups.UI.FunctionalTests"
-      UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToSitAppJobGroups
   condition: succeeded()
