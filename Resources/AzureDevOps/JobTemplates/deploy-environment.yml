@@ -102,7 +102,7 @@ jobs:
 - deployment: DeployUIFunctionalTests
   displayName: "Deploy ui functional tests"
   environment: ${{ parameters.EnvironmentName }}
-  condition: "[and(equals(parameters('EnvironmentName'),'LAB_AppJobGroups'), equals(parameters('EnvironmentName'),'LAB-DRAFT_AppJobGroups'), equals(parameters('EnvironmentName'), 'SIT_AppJobGroups'), equals(parameters('EnvironmentName'), 'SIT-DRAFT_AppJobGroups'), equals(parameters('EnvironmentName'), 'PP_AppJobGroups'), equals(parameters('EnvironmentName'), 'PP-DRAFT_AppJobGroups'), equals(parameters('EnvironmentName'), 'PRD_AppJobGroups'), equals(parameters('EnvironmentName'), 'PRD-DRAFT_AppJobGroups'))]",
+  condition: "[and(equals(parameters('EnvironmentName'),'LAB_AppJobGroups'), equals(parameters('EnvironmentName'),'LAB-DRAFT_AppJobGroups'), equals(parameters('EnvironmentName'), 'SIT_AppJobGroups'), equals(parameters('EnvironmentName'), 'SIT-DRAFT_AppJobGroups'), equals(parameters('EnvironmentName'), 'PP_AppJobGroups'), equals(parameters('EnvironmentName'), 'PP-DRAFT_AppJobGroups'), equals(parameters('EnvironmentName'), 'PRD_AppJobGroups'), equals(parameters('EnvironmentName'), 'PRD-DRAFT_AppJobGroups'))]"
   dependsOn:
   - DeployApplication
   strategy:
