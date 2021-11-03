@@ -102,7 +102,7 @@ jobs:
 - deployment: DeployUIFunctionalTests
   displayName: "Deploy ui functional tests"
   environment: ${{ parameters.EnvironmentName }}
-  condition: in('${{ parameters.EnvironmentName }}', 'LAB_AppJobGroups', 'SIT_AppJobGroups', 'PP_AppJobGroups', 'PRD_AppJobGroups')
+  condition: in('${{ parameters.EnvironmentName }}', 'LAB_AppJobGroups', 'LAB-DRAFT_AppJobGroups', 'SIT_AppJobGroups', 'SIT-DRAFT_AppJobGroups', 'PP_AppJobGroups', 'PP-DRAFT_AppJobGroups', 'PRD_AppJobGroups', 'PRD-DRAFT_AppJobGroups')
   dependsOn:
   - DeployApplication
   strategy:
