@@ -20,7 +20,7 @@
             @if (Model.Retirements.HasValue && Model.PercentageRetirements.HasValue)
             {
                 <p class="govuk-body-m govuk-!-margin-bottom-1">
-                    In the same period <span class="govuk-!-font-weight-bold">@Model.PercentageRetirements.Value.ToString("#,##0.0", System.Globalization.CultureInfo.InvariantCulture)%</span> of the workforce is projected to retire, creating <span class="govuk-!-font-weight-bold">@Model.Retirements.Value.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture)</span> job openings
+                    In the same period, <span class="govuk-!-font-weight-bold">@Model.PercentageRetirements.Value.ToString("#,##0.0", System.Globalization.CultureInfo.InvariantCulture)%</span> of the workforce is projected to retire, creating <span class="govuk-!-font-weight-bold">@Model.Retirements.Value.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture)</span> job openings
                 </p>
             }
         </div>
