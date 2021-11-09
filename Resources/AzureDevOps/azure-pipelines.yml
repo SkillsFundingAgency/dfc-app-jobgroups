@@ -422,7 +422,7 @@ stages:
 
 - stage: DeployToPPAppJobGroups
   #condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  #condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to PP_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -477,7 +477,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPPDraftAppJobGroups
-  condition: and(eq(dependencies.DeployToPPAppJobGroups.result,'SucceededOrFailed()'), ne(variables['Build.Reason'], 'PullRequest'))
+  #condition: and(eq(dependencies.DeployToPPAppJobGroups.result,'SucceededOrFailed()'), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to PP-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
