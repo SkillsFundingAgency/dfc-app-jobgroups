@@ -1,6 +1,6 @@
 variables:
 - name: ReleaseEnvironmentName
-  value: prd-draft
+  value: lab-draft
 - name: AppServiceName
   value: $(WebAppPrefix)-as
 - name: cosmosDbCollectionName
@@ -18,7 +18,7 @@ variables:
 - name: contentUrl
   value: $(ContentApiDraftAddress)/api/execute
 - name: subscriptionUrl
-  value: https://dfc-prd-api-eventgridsubscriptions-fa.$(appServiceDomain)
+  value: https://dfc-lab-api-eventgridsubscriptions-fa.$(appServiceDomain)
 - name: SubscriptionSettingsEndpoint
   value: $(ApimProxyAddress)/composite-ui/jobgroups-draft
 - name: apiName
@@ -28,7 +28,7 @@ variables:
 - name: applicationUrl
   value: https://$(AppServiceName).$(appServiceDomain)
 - name: WebAppPrefix
-  value: dfc-prd-draft-app-jobgroups
+  value: dfc-lab-draft-app-jobgroups
 - name: SubscriptionSettingsFilterIncludeEventTypes3
   value: draft
 - name: SubscriptionSettingsFilterIncludeEventTypes4
@@ -42,11 +42,11 @@ variables:
 - name: aspInstances
   value: 2
 - name: aspSize
-  value: 1
+  value: 2
 - name: clientAffinity
   value: false
 - name: jobgroupsAppDatabaseThroughput
-  value: 800
+  value: 400
 - name: ExceptionCountThreshold
   value: 10
 - name: MemoryPercentageThreshold
@@ -54,6 +54,6 @@ variables:
 - name: CPUPercentageThreshold
   value: 75
 - name: EventGridPublishClientOptionsApiEndpoint
-  value: https://dfc-prd-draft-app-jobgroups-as.$(FunctionAppDomain)/lmi-delta-report
+  value: https://dfc-lab-draft-app-jobgroups-as.$(FunctionAppDomain)/lmi-delta-report
 - name: EventGridSubjectPrefix
   value: /dfc-app-jobgroups/

@@ -1,12 +1,12 @@
 variables:
 - name: ReleaseEnvironmentName
-  value: prd-draft
+  value: lab
 - name: AppServiceName
   value: $(WebAppPrefix)-as
 - name: cosmosDbCollectionName
-  value: job-groups-draft
+  value: job-groups
 - name: sharedContentDbCollectionName
-  value: shared-content-draft
+  value: shared-content
 - name: ResourceGroup
   value: $(WebAppPrefix)-rg
 - name: WebAppProjectName
@@ -14,25 +14,21 @@ variables:
 - name: PageRegistrationFile
   value: registration.json
 - name: ApplicationName
-  value: dfc-app-jobgroups-draft
+  value: dfc-app-jobgroups
 - name: contentUrl
-  value: $(ContentApiDraftAddress)/api/execute
+  value: $(ContentApiAddress)/api/execute
 - name: subscriptionUrl
-  value: https://dfc-prd-api-eventgridsubscriptions-fa.$(appServiceDomain)
+  value: https://dfc-lab-api-eventgridsubscriptions-fa.$(appServiceDomain)
 - name: SubscriptionSettingsEndpoint
-  value: $(ApimProxyAddress)/composite-ui/jobgroups-draft
+  value: $(ApimProxyAddress)/composite-ui/jobgroups
 - name: apiName
-  value: jobgroups-draft
+  value: jobgroups
 - name: apiId
-  value: composite-ui-jobgroups-draft
+  value: composite-ui-jobgroups
 - name: applicationUrl
   value: https://$(AppServiceName).$(appServiceDomain)
 - name: WebAppPrefix
-  value: dfc-prd-draft-app-jobgroups
-- name: SubscriptionSettingsFilterIncludeEventTypes3
-  value: draft
-- name: SubscriptionSettingsFilterIncludeEventTypes4
-  value: draft-discarded
+  value: dfc-lab-app-jobgroups
 - name: SubscriptionSettingsFilterPropertyContainsFilters0Values0
   value: 2c9da1b3-3529-4834-afc9-9cd741e59788
 - name: EnableAzureMonitorAlerting
@@ -42,11 +38,11 @@ variables:
 - name: aspInstances
   value: 2
 - name: aspSize
-  value: 1
+  value: 2
 - name: clientAffinity
   value: false
 - name: jobgroupsAppDatabaseThroughput
-  value: 800
+  value: 400
 - name: ExceptionCountThreshold
   value: 10
 - name: MemoryPercentageThreshold
@@ -54,6 +50,6 @@ variables:
 - name: CPUPercentageThreshold
   value: 75
 - name: EventGridPublishClientOptionsApiEndpoint
-  value: https://dfc-prd-draft-app-jobgroups-as.$(FunctionAppDomain)/lmi-delta-report
+  value: https://dfc-lab-app-jobgroups-as.$(FunctionAppDomain)/lmi-delta-report
 - name: EventGridSubjectPrefix
   value: /dfc-app-jobgroups/

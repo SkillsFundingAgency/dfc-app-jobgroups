@@ -14,9 +14,25 @@
         </div>
         <div class="panel-footer">
             <p class="govuk-body-m govuk-!-margin-bottom-1">
-                <span class="govuk-!-font-weight-bold">Leading to:</span>                
-                @Model.JobsCreatedAbsoluteValue.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture) @Html.Raw(Model.NewOrLostString) jobs by @Model.EndYearRange
+                <span class="govuk-!-font-weight-bold">Leading to:</span>
+                @Model.JobsCreated.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture) @Html.Raw(Model.NewOrLostString) jobs by  @Html.Raw(Model.EndYearRange).
             </p>
+            @if (Model.Retirements.HasValue && Model.PercentageRetirements.HasValue)
+            {
+                <p class="govuk-body-m govuk-!-margin-bottom-1">
+                    In the same period, <span class="govuk-!-font-weight-bold">@Model.PercentageRetirements.Value.ToString("#,##0.0", System.Globalization.CultureInfo.InvariantCulture)%</span> of the workforce is projected to retire, creating <span class="govuk-!-font-weight-bold">@Model.Retirements.Value.ToString("#,##0", System.Globalization.CultureInfo.InvariantCulture)</span> job openings.
+                </p>
+            }
         </div>
+    </div>
+}
+else
+{
+    <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            Job growth information is unavailable for this job group.
+        </strong>
     </div>
 }
