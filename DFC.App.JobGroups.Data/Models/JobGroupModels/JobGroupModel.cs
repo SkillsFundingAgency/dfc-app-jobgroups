@@ -18,8 +18,6 @@ namespace DFC.App.JobGroups.Data.Models.JobGroupModels
 
         public int Soc { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
-
         public DateTime TransformedDate { get; set; } = DateTime.UtcNow;
 
         public DateTime LastCached { get; set; } = DateTime.UtcNow;

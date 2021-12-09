@@ -29,10 +29,6 @@ namespace DFC.App.JobGroups.ViewModels
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy HH:mm:ss}")]
         public DateTime TransformedDate { get; set; }
 
-        [Display(Name = "Created Date")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy HH:mm:ss}")]
-        public DateTime CreatedDate { get; set; }
-
         [Display(Name = "Last Cached")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy HH:mm:ss}")]
         public DateTime LastCached { get; set; }
