@@ -17,7 +17,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.Webhooks
 {
     public class WebhooksContentService : IWebhooksContentService
     {
-        private const string EventTypeDraft = "draft";
+        private const string EventTypePublished = "published";
 
         private readonly ILogger<WebhooksContentService> logger;
         private readonly IMapper mapper;
@@ -67,7 +67,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.Webhooks
                         var result = await jobGroupCacheRefreshService.ReloadAsync(url).ConfigureAwait(false);
                         if (result == HttpStatusCode.OK || result == HttpStatusCode.Created)
                         {
-                            await PostDraftEventAsync($"Draft all SOCs to delta-report API", eventGridClientOptions.ApiEndpoint, Guid.NewGuid()).ConfigureAwait(false);
+                            await PostPublishedEventAsync($"Publish all SOCs to delta-report API", eventGridClientOptions.ApiEndpoint, Guid.NewGuid()).ConfigureAwait(false);
                         }
 
                         return result;
@@ -86,7 +86,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.Webhooks
                         if (result == HttpStatusCode.OK || result == HttpStatusCode.Created)
                         {
                             var eventGridEndpoint = new Uri($"{eventGridClientOptions.ApiEndpoint}/{contentId}", UriKind.Absolute);
-                            await PostDraftEventAsync($"Draft individual SOC to delta-report API", eventGridEndpoint, contentId).ConfigureAwait(false);
+                            await PostPublishedEventAsync($"Publish individual SOC to delta-report API", eventGridEndpoint, contentId).ConfigureAwait(false);
                         }
 
                         return result;
@@ -118,7 +118,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.Webhooks
             return contentResult;
         }
 
-        public async Task PostDraftEventAsync(string displayText, Uri? apiEndpoint, Guid? contentId)
+        public Task PostPublishedEventAsync(string displayText, Uri? apiEndpoint, Guid? contentId)
         {
             logger.LogInformation($"Posting to event grid for: {displayText}");
 
@@ -131,7 +131,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService.Webhooks
                 Author = eventGridClientOptions.SubjectPrefix,
             };
 
-            await eventGridService.SendEventAsync(eventGridEventData, eventGridClientOptions.SubjectPrefix, EventTypeDraft).ConfigureAwait(false);
+            return eventGridService.SendEventAsync(eventGridEventData, eventGridClientOptions.SubjectPrefix, EventTypePublished);
         }
     }
 }
