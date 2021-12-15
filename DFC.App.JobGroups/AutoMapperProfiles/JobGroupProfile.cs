@@ -33,11 +33,11 @@ namespace DFC.App.JobGroups.AutoMapperProfiles
             CreateMap<JobGroupModel, IndexDocumentViewModel>();
 
             CreateMap<JobGroupModel, DocumentViewModel>()
-                .ForMember(d => d.HtmlHead, s => s.MapFrom(a => a))
+                .ForMember(d => d.Head, s => s.MapFrom(a => a))
                 .ForMember(d => d.Breadcrumb, s => s.Ignore())
                 .ForMember(d => d.BodyViewModel, s => s.MapFrom(a => a));
 
-            CreateMap<JobGroupModel, HtmlHeadViewModel>()
+            CreateMap<JobGroupModel, HeadViewModel>()
                 .ForMember(d => d.CanonicalUrl, s => s.Ignore())
                 .ForMember(d => d.Title, s => s.MapFrom(a => !string.IsNullOrWhiteSpace(a.Title) ? a.Title + " | " + NcsPageTitle : NcsPageTitle))
                 .ForMember(d => d.Description, s => s.MapFrom(a => a.Description))
