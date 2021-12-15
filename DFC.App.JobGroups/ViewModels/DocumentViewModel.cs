@@ -7,7 +7,7 @@ namespace DFC.App.JobGroups.ViewModels
     [ExcludeFromCodeCoverage]
     public class DocumentViewModel
     {
-        public HtmlHeadViewModel HtmlHead { get; set; } = new HtmlHeadViewModel();
+        public HeadViewModel Head { get; set; } = new HeadViewModel();
 
         public BreadcrumbViewModel? Breadcrumb { get; set; }
 

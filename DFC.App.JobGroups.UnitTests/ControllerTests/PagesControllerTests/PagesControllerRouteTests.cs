@@ -31,7 +31,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             var controller = BuildController(route);
             var expectedResult = new JobGroupModel() { Title = "A title", };
             var expectedResults = new List<JobGroupModel> { expectedResult };
-            var expectedViewModel = new DocumentViewModel { Title = "A title", HtmlHead = A.Dummy<HtmlHeadViewModel>(), };
+            var expectedViewModel = new DocumentViewModel { Title = "A title", Head = A.Dummy<HeadViewModel>(), };
             A.CallTo(() => FakeJobGroupDocumentService.GetAllAsync(A<string>.Ignored)).Returns(expectedResults);
             A.CallTo(() => FakeJobGroupDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).Returns(expectedResult);
             A.CallTo(() => FakeMapper.Map<DocumentViewModel>(A<JobGroupModel>.Ignored)).Returns(expectedViewModel);

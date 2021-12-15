@@ -85,7 +85,7 @@ namespace DFC.App.JobGroups.Controllers
                 var viewModel = mapper.Map<DocumentViewModel>(jobGroupModel);
 
                 viewModel.Breadcrumb = BuildBreadcrumb(LocalPath, null, jobGroupModel.Title);
-                viewModel.HtmlHead.CanonicalUrl = new Uri($"{Request.GetBaseAddress()}{LocalPath}/{jobGroupModel.Soc}", UriKind.RelativeOrAbsolute);
+                viewModel.Head.CanonicalUrl = new Uri($"{Request.GetBaseAddress()}{LocalPath}/{jobGroupModel.Soc}", UriKind.RelativeOrAbsolute);
 
                 logger.LogInformation($"{nameof(Document)} has succeeded for: {soc}");
 
@@ -98,23 +98,23 @@ namespace DFC.App.JobGroups.Controllers
         }
 
         [HttpGet]
-        [Route("pages/{soc}/htmlhead")]
-        [Route("pages/{soc}/{fromJobProfileCanonicalName}/htmlhead")]
-        public async Task<IActionResult> HtmlHead(SocRequestModel socRequest)
+        [Route("pages/{soc}/head")]
+        [Route("pages/{soc}/{fromJobProfileCanonicalName}/head")]
+        public async Task<IActionResult> Head(SocRequestModel socRequest)
         {
             var jobGroupModel = await jobGroupDocumentService.GetAsync(w => w.Soc == socRequest.Soc, socRequest.Soc.ToString(CultureInfo.InvariantCulture)).ConfigureAwait(false);
 
             if (jobGroupModel != null)
             {
-                var viewModel = mapper.Map<HtmlHeadViewModel>(jobGroupModel);
+                var viewModel = mapper.Map<HeadViewModel>(jobGroupModel);
                 viewModel.CanonicalUrl = new Uri($"{Request.GetBaseAddress()}{RegistrationPath}/{jobGroupModel.Soc}", UriKind.RelativeOrAbsolute);
 
-                logger.LogInformation($"{nameof(HtmlHead)} has succeeded for: {socRequest.Soc}");
+                logger.LogInformation($"{nameof(Head)} has succeeded for: {socRequest.Soc}");
 
                 return this.NegotiateContentResult(viewModel);
             }
 
-            logger.LogWarning($"{nameof(HtmlHead)} has returned no content for: {socRequest.Soc}");
+            logger.LogWarning($"{nameof(Head)} has returned no content for: {socRequest.Soc}");
 
             return NoContent();
         }
