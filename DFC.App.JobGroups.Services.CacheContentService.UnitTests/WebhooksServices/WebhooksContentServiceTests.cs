@@ -255,12 +255,12 @@ namespace DFC.App.JobGroups.Services.CacheContentService.UnitTests.WebhooksServi
         }
 
         [Fact]
-        public async Task WebhooksContentServicePostDraftEventAsyncReturnsSuccessfully()
+        public async Task WebhooksContentServicePostPublishedEventAsyncReturnsSuccessfully()
         {
             // Arrange
 
             // Act
-            await webhooksContentService.PostDraftEventAsync("hello world", new Uri("https://somewhere.com", UriKind.Absolute), Guid.NewGuid()).ConfigureAwait(false);
+            await webhooksContentService.PostPublishedEventAsync("hello world", new Uri("https://somewhere.com", UriKind.Absolute), Guid.NewGuid()).ConfigureAwait(false);
 
             // Assert
             A.CallTo(() => fakeEventGridService.SendEventAsync(A<EventGridEventData>.Ignored, A<string>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();

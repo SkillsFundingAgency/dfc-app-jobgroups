@@ -7,7 +7,7 @@ namespace DFC.App.JobGroups.ViewModels
     [ExcludeFromCodeCoverage]
     public class DocumentViewModel
     {
-        public HtmlHeadViewModel HtmlHead { get; set; } = new HtmlHeadViewModel();
+        public HeadViewModel Head { get; set; } = new HeadViewModel();
 
         public BreadcrumbViewModel? Breadcrumb { get; set; }
 
@@ -28,10 +28,6 @@ namespace DFC.App.JobGroups.ViewModels
         [Display(Name = "Transformed Date")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy HH:mm:ss}")]
         public DateTime TransformedDate { get; set; }
-
-        [Display(Name = "Created Date")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy HH:mm:ss}")]
-        public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Last Cached")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy HH:mm:ss}")]
