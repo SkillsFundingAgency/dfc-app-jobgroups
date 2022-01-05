@@ -53,7 +53,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             var expectedResult = A.Fake<JobGroupModel>();
             var controller = BuildPagesController(mediaTypeName);
             var dummyDocumentViewModel = A.Dummy<DocumentViewModel>();
-            dummyDocumentViewModel.HtmlHead = A.Dummy<HtmlHeadViewModel>();
+            dummyDocumentViewModel.Head = A.Dummy<HeadViewModel>();
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(expectedResult);
             A.CallTo(() => FakeMapper.Map<DocumentViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyDocumentViewModel);
@@ -103,7 +103,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             var expectedResult = A.Fake<JobGroupModel>();
             var controller = BuildPagesController(mediaTypeName);
             var dummyDocumentViewModel = A.Dummy<DocumentViewModel>();
-            dummyDocumentViewModel.HtmlHead = A.Dummy<HtmlHeadViewModel>();
+            dummyDocumentViewModel.Head = A.Dummy<HeadViewModel>();
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(expectedResult);
             A.CallTo(() => FakeMapper.Map<DocumentViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyDocumentViewModel);

@@ -42,7 +42,7 @@ variables:
 - name: clientAffinity
   value: false
 - name: jobgroupsAppDatabaseThroughput
-  value: 400
+  value: 1200
 - name: ExceptionCountThreshold
   value: 10
 - name: MemoryPercentageThreshold

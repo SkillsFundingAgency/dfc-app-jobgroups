@@ -11,59 +11,59 @@ using Xunit;
 
 namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 {
-    [Trait("Category", "Pages Controller - HtmlHead Unit Tests")]
-    public class PagesControllerHtmlHeadTests : BasePagesControllerTests
+    [Trait("Category", "Pages Controller - Head Unit Tests")]
+    public class PagesControllerHeadTests : BasePagesControllerTests
     {
         [Theory]
         [MemberData(nameof(HtmlMediaTypes))]
-        public async Task PagesControllerHtmlHeadHtmlReturnsSuccess(string mediaTypeName)
+        public async Task PagesControllerHeadHtmlReturnsSuccess(string mediaTypeName)
         {
             // Arrange
             var dummyJobGroupModel = A.Dummy<JobGroupModel>();
             var controller = BuildPagesController(mediaTypeName);
             var socRequestModel = new SocRequestModel { Soc = 3231, FromJobProfileCanonicalName = "a-job-profile", };
-            var dummyHtmlHeadViewModel = A.Dummy<HtmlHeadViewModel>();
+            var dummyHeadViewModel = A.Dummy<HeadViewModel>();
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(dummyJobGroupModel);
-            A.CallTo(() => FakeMapper.Map<HtmlHeadViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyHtmlHeadViewModel);
+            A.CallTo(() => FakeMapper.Map<HeadViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyHeadViewModel);
 
             // Act
-            var result = await controller.HtmlHead(socRequestModel).ConfigureAwait(false);
+            var result = await controller.Head(socRequestModel).ConfigureAwait(false);
 
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => FakeMapper.Map<HtmlHeadViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => FakeMapper.Map<HeadViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
 
             var viewResult = Assert.IsType<ViewResult>(result);
-            _ = Assert.IsAssignableFrom<HtmlHeadViewModel>(viewResult.ViewData.Model);
-            var model = viewResult.ViewData.Model as HtmlHeadViewModel;
-            Assert.Equal(dummyHtmlHeadViewModel, model);
+            _ = Assert.IsAssignableFrom<HeadViewModel>(viewResult.ViewData.Model);
+            var model = viewResult.ViewData.Model as HeadViewModel;
+            Assert.Equal(dummyHeadViewModel, model);
 
             controller.Dispose();
         }
 
         [Theory]
         [MemberData(nameof(JsonMediaTypes))]
-        public async Task PagesControllerHtmlHeadJsonReturnsSuccess(string mediaTypeName)
+        public async Task PagesControllerHeadJsonReturnsSuccess(string mediaTypeName)
         {
             // Arrange
             var dummyJobGroupModel = A.Dummy<JobGroupModel>();
             var controller = BuildPagesController(mediaTypeName);
             var socRequestModel = new SocRequestModel { Soc = 3231, FromJobProfileCanonicalName = "a-job-profile", };
-            var dummyHtmlHeadViewModel = A.Dummy<HtmlHeadViewModel>();
+            var dummyHeadViewModel = A.Dummy<HeadViewModel>();
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(dummyJobGroupModel);
-            A.CallTo(() => FakeMapper.Map<HtmlHeadViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyHtmlHeadViewModel);
+            A.CallTo(() => FakeMapper.Map<HeadViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyHeadViewModel);
 
             // Act
-            var result = await controller.HtmlHead(socRequestModel).ConfigureAwait(false);
+            var result = await controller.Head(socRequestModel).ConfigureAwait(false);
 
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => FakeMapper.Map<HtmlHeadViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => FakeMapper.Map<HeadViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
 
             var jsonResult = Assert.IsType<OkObjectResult>(result);
-            _ = Assert.IsAssignableFrom<HtmlHeadViewModel>(jsonResult.Value);
+            _ = Assert.IsAssignableFrom<HeadViewModel>(jsonResult.Value);
 
             controller.Dispose();
         }
@@ -71,7 +71,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
         [Theory]
         [MemberData(nameof(JsonMediaTypes))]
         [MemberData(nameof(HtmlMediaTypes))]
-        public async Task PagesControllerHtmlHeadReturnsNoContentWhenNoData(string mediaTypeName)
+        public async Task PagesControllerHeadReturnsNoContentWhenNoData(string mediaTypeName)
         {
             // Arrange
             JobGroupModel? nullJobGroupModel = null;
@@ -81,7 +81,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(nullJobGroupModel);
 
             // Act
-            var result = await controller.HtmlHead(socRequestModel).ConfigureAwait(false);
+            var result = await controller.Head(socRequestModel).ConfigureAwait(false);
 
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
@@ -95,23 +95,23 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 
         [Theory]
         [MemberData(nameof(InvalidMediaTypes))]
-        public async Task PagesControllerHtmlHeadReturnsNotAcceptable(string mediaTypeName)
+        public async Task PagesControllerHeadReturnsNotAcceptable(string mediaTypeName)
         {
             // Arrange
             var dummyJobGroupModel = A.Dummy<JobGroupModel>();
             var controller = BuildPagesController(mediaTypeName);
             var socRequestModel = new SocRequestModel { Soc = 3231, FromJobProfileCanonicalName = "a-job-profile", };
-            var dummyHtmlHeadViewModel = A.Dummy<HtmlHeadViewModel>();
+            var dummyHeadViewModel = A.Dummy<HeadViewModel>();
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(dummyJobGroupModel);
-            A.CallTo(() => FakeMapper.Map<HtmlHeadViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyHtmlHeadViewModel);
+            A.CallTo(() => FakeMapper.Map<HeadViewModel>(A<JobGroupModel>.Ignored)).Returns(dummyHeadViewModel);
 
             // Act
-            var result = await controller.HtmlHead(socRequestModel).ConfigureAwait(false);
+            var result = await controller.Head(socRequestModel).ConfigureAwait(false);
 
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => FakeMapper.Map<HtmlHeadViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => FakeMapper.Map<HeadViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
 
             var statusResult = Assert.IsType<StatusCodeResult>(result);
 
