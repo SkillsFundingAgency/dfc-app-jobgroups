@@ -20,8 +20,6 @@ namespace DFC.App.JobGroups.Controllers
     {
         public const string RegistrationPath = "job-groups";
         public const string LocalPath = "pages";
-        public const string DefaultPageTitleSuffix = "Job group LMI | National Careers Service";
-        public const string PageTitleSuffix = " | " + DefaultPageTitleSuffix;
 
         private readonly ILogger<PagesController> logger;
         private readonly AutoMapper.IMapper mapper;
