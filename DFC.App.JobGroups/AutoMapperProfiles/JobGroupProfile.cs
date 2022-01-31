@@ -15,7 +15,7 @@ namespace DFC.App.JobGroups.AutoMapperProfiles
     [ExcludeFromCodeCoverage]
     public class JobGroupProfile : Profile
     {
-        private const string NcsPageTitle = "National Careers Service";
+        private const string NcsPageTitle = "Explore careers | National Careers Service";
 
         public JobGroupProfile()
         {
