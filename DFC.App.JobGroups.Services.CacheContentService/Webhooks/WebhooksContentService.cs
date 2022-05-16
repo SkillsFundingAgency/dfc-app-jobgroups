@@ -72,11 +72,9 @@ namespace DFC.App.JobGroups.Services.CacheContentService.Webhooks
 
                         return result;
                     }
-                    else
-                    {
-                        logger.LogInformation($"Event Id: {eventId} - processing published LMI SOC refresh from draft for: {url}");
-                        return await jobGroupPublishedRefreshService.ReloadAsync(url).ConfigureAwait(false);
-                    }
+
+                    logger.LogInformation($"Event Id: {eventId} - processing published LMI SOC refresh from draft for: {url}");
+                    return await jobGroupPublishedRefreshService.ReloadAsync(url).ConfigureAwait(false);
 
                 case MessageContentType.JobGroupItem:
                     if (isDraft)
