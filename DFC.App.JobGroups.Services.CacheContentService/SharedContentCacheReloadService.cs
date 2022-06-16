@@ -40,20 +40,28 @@ namespace DFC.App.JobGroups.Services.CacheContentService
 
         public async Task ReloadAsync(CancellationToken stoppingToken)
         {
-            logger.LogInformation("Reload shared content started");
-
-            contentTypeMappingService.AddMapping(Constants.ContentTypeSharedContent, typeof(CmsApiSharedContentModel));
-
-            if (stoppingToken.IsCancellationRequested)
+            try
             {
-                logger.LogWarning("Reload shared content cancelled");
+                logger.LogInformation("Reload shared content started");
 
-                return;
+                contentTypeMappingService.AddMapping(Constants.ContentTypeSharedContent, typeof(CmsApiSharedContentModel));
+
+                if (stoppingToken.IsCancellationRequested)
+                {
+                    logger.LogWarning("Reload shared content cancelled");
+
+                    return;
+                }
+
+                await ReloadCacheItem(Guid.Parse(Constants.SharedContentAskAdviserItemId), stoppingToken).ConfigureAwait(false);
+
+                logger.LogInformation("Reload All shared content completed");
             }
-
-            await ReloadCacheItem(Guid.Parse(Constants.SharedContentAskAdviserItemId), stoppingToken).ConfigureAwait(false);
-
-            logger.LogInformation("Reload All shared content completed");
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error in shared content cache reload");
+                throw;
+            }
         }
 
         private async Task ReloadCacheItem(Guid itemId, CancellationToken stoppingToken)
