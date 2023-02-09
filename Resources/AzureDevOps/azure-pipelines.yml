@@ -203,7 +203,7 @@ stages:
 
 - stage: DeployToDevAppJobGroups
   dependsOn: Build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch']))
+  condition: succeeded()
   displayName: Deploy to DEV_AppJobGroups
   variables:
   - group: dfc-shared-all
