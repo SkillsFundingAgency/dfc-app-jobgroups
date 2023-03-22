@@ -91,7 +91,7 @@ stages:
         BuildConfiguration: $(BuildConfiguration)
 
 - stage: DeployToLabAppJobGroups
-  condition: (succeeded()
+  condition: succeeded()
   displayName: Deploy to LAB_AppJobGroups
   variables:
   - group: dfc-shared-all
