@@ -91,7 +91,7 @@ stages:
         BuildConfiguration: $(BuildConfiguration)
 
 - stage: DeployToLabAppJobGroups
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  condition: (succeeded()
   displayName: Deploy to LAB_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -419,7 +419,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPPAppJobGroups
-  condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PP_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -474,7 +474,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPPDraftAppJobGroups
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PP-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -530,7 +530,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPRDAppJobGroups
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PRD_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -585,7 +585,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPRDDraftAppJobGroups
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   displayName: Deploy to PRD-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
