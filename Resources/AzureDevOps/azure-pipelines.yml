@@ -205,7 +205,7 @@ stages:
 
 - stage: DeployToDevAppJobGroups
   dependsOn: Build
-  condition: suceeded()
+  condition: succeeded()
   displayName: Deploy to DEV_AppJobGroups
   variables:
   - group: dfc-shared-all
