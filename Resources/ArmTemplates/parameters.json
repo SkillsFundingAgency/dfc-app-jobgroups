@@ -115,6 +115,9 @@
         },
         "EventGridSubjectPrefix": {
             "value": "__EventGridSubjectPrefix__"
+        },
+        "appInsightsInstrumentationKey": {
+            "value": "__appInsightsInstrumentationKey__" 
         }
     }
 }
