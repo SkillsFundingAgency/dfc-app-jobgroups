@@ -19,15 +19,15 @@ pool:
   - msbuild
   - visualstudio
 
-trigger: 
+trigger:
   branches:
-    include: 
+    include:
     - dev
     - master
 
 pr:
   branches:
-    include: 
+    include:
     - dev
     - master
 
@@ -91,7 +91,7 @@ stages:
         BuildConfiguration: $(BuildConfiguration)
 
 - stage: DeployToLabAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to LAB_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -146,7 +146,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToLabDraftAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to LAB-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -203,7 +203,7 @@ stages:
 
 - stage: DeployToDevAppJobGroups
   dependsOn: Build
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to DEV_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -222,7 +222,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-dev
   - template: VariableTemplates\DevEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -255,7 +255,7 @@ stages:
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
 
 - stage: DeployToDevDraftAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to DEV-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -275,7 +275,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-dev
   - template: VariableTemplates\DevDraftEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -308,7 +308,7 @@ stages:
       SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.OpenApiDocs"
 
 - stage: DeployToSitAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to SIT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -327,7 +327,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-sit
   - template: VariableTemplates\SitEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -363,7 +363,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToSitDraftAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to SIT-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -383,7 +383,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-sit
   - template: VariableTemplates\SitDraftEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -419,7 +419,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPPAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to PP_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -438,7 +438,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-pp
   - template: VariableTemplates\PPEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -474,7 +474,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPPDraftAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to PP-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -494,7 +494,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-pp
   - template: VariableTemplates\PPDraftEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -530,7 +530,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPRDAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to PRD_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -549,7 +549,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-prd
   - template: VariableTemplates\PRDEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -585,7 +585,7 @@ stages:
       UIFunctionalTestCategoryJobGroups: JobGroups
 
 - stage: DeployToPRDDraftAppJobGroups
-  condition: succeeded()
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to PRD-DRAFT_AppJobGroups
   variables:
   - group: dfc-shared-all
@@ -605,7 +605,7 @@ stages:
   - group: dfc-browserstack
   - group: dfc-app-uiautomation-prd
   - template: VariableTemplates\PRDDraftEnvironmentVariables.yml
-  
+
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
