@@ -8,6 +8,10 @@
 	  <ProjectGuid>{E415BE18-17B6-436C-8406-4FC5F881CD31}</ProjectGuid>
 	  <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SharedContentCacheReloadServiceTests.cs" />
+  </ItemGroup>
 	
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
