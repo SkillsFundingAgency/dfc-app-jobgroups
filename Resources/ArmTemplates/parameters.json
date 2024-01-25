@@ -15,7 +15,7 @@
       "value": "__aseResourceGroup__"
     },
     "aspInstances": {
-      "value": __aspInstances__
+      "value": "__aspInstances__"
     },
     "clientAffinity": {
       "value": "__clientAffinity__"
@@ -51,7 +51,7 @@
       "value": "__CosmosDbDatabaseDoesntExist__"
     },
     "jobgroupsAppDatabaseThroughput": {
-      "value": __jobgroupsAppDatabaseThroughput__
+      "value": "__jobgroupsAppDatabaseThroughput__"
     },
     "enableAlerts": {
       "value": "__EnableAzureMonitorAlerting__"
@@ -135,7 +135,7 @@
       "value": "__CmsClientSecret__"
     },
     "CmsRedisCacheConnectionString": {
-      "value": "__CmsRedisCacheConnectionString__"
+      "value": "__RedisConnectionString__"
     }
   }
 }
