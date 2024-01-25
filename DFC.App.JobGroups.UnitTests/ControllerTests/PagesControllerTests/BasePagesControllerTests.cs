@@ -1,6 +1,7 @@
 ﻿using DFC.App.JobGroups.Controllers;
 using DFC.App.JobGroups.Data.Models.ContentModels;
 using DFC.App.JobGroups.Data.Models.JobGroupModels;
+using DFC.Common.SharedContent.Pkg.Netcore.Interfaces;
 using DFC.Compui.Cosmos.Contracts;
 using FakeItEasy;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +19,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
         {
             FakeLogger = A.Fake<ILogger<PagesController>>();
             FakeJobGroupDocumentService = A.Fake<IDocumentService<JobGroupModel>>();
-            FakeSharedContentDocumentService = A.Fake<IDocumentService<ContentItemModel>>();
+            FakeSharedContentRedisInterface = A.Fake<ISharedContentRedisInterface>();
             FakeMapper = A.Fake<AutoMapper.IMapper>();
         }
 
@@ -38,11 +39,14 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             new string[] { MediaTypeNames.Application.Json },
         };
 
+        public ISharedContentRedisInterface FakeSharedContentDocumentService { get; private set; }
         protected ILogger<PagesController> FakeLogger { get; }
 
         protected IDocumentService<JobGroupModel> FakeJobGroupDocumentService { get; }
 
-        protected IDocumentService<ContentItemModel> FakeSharedContentDocumentService { get; }
+        //protected IDocumentService<ContentItemModel> FakeSharedContentDocumentService { get; }
+
+        protected ISharedContentRedisInterface FakeSharedContentRedisInterface { get; }
 
         protected AutoMapper.IMapper FakeMapper { get; }
 
@@ -52,7 +56,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 
             httpContext.Request.Headers[HeaderNames.Accept] = mediaTypeName;
 
-            var controller = new PagesController(FakeLogger, FakeMapper, FakeJobGroupDocumentService, FakeSharedContentDocumentService)
+            var controller = new PagesController(FakeLogger, FakeMapper, FakeJobGroupDocumentService, FakeSharedContentRedisInterface)
             {
                 ControllerContext = new ControllerContext()
                 {
