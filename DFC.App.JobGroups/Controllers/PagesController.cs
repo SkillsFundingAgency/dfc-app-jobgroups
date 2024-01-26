@@ -203,7 +203,7 @@ namespace DFC.App.JobGroups.Controllers
 
                 try
                 {
-                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>("sharedContent/" + SharedContentStaxId);
+                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>("SharedContent/" + SharedContentStaxId);
 
                     viewModel.SharedContent = sharedhtml.Html;
                 }
