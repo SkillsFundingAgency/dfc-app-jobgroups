@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
 using DFC.App.JobGroups.Data.Contracts;
 using DFC.App.JobGroups.Data.Models.ClientOptions;
-using DFC.App.JobGroups.Data.Models.ContentModels;
 using DFC.App.JobGroups.Data.Models.JobGroupModels;
-using DFC.App.JobGroups.HostedServices;
-using DFC.App.JobGroups.Services.CacheContentService;
 using DFC.App.JobGroups.Services.CacheContentService.Connectors;
-using DFC.App.JobGroups.Services.CacheContentService.Webhooks;
-using DFC.Common.SharedContent.Pkg.Netcore.Infrastructure.Strategy;
+using DFC.Common.SharedContent.Pkg.Netcore;
 using DFC.Common.SharedContent.Pkg.Netcore.Infrastructure;
+using DFC.Common.SharedContent.Pkg.Netcore.Infrastructure.Strategy;
 using DFC.Common.SharedContent.Pkg.Netcore.Interfaces;
 using DFC.Common.SharedContent.Pkg.Netcore.Model.ContentItems.SharedHtml;
 using DFC.Common.SharedContent.Pkg.Netcore.RequestHandler;
-using DFC.Common.SharedContent.Pkg.Netcore;
 using DFC.Compui.Cosmos;
 using DFC.Compui.Cosmos.Contracts;
 using DFC.Compui.Subscriptions.Pkg.Netstandard.Extensions;
@@ -25,7 +21,6 @@ using GraphQL.Client.Serializer.Newtonsoft;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,12 +36,11 @@ namespace DFC.App.JobGroups
     {
         private const string AppSettingsPolicies = "Policies";
         private const string CosmosDbJobGroupConfigAppSettings = "Configuration:CosmosDbConnections:JobGroup";
-        //private const string CosmosDbSharedContentConfigAppSettings = "Configuration:CosmosDbConnections:SharedContent";
+        private const string RedisCacheConnectionStringAppSettings = "Cms:RedisCacheConnectionString";
+        private const string GraphApiUrlAppSettings = "Cms:GraphApiUrl";
 
         private readonly IConfiguration configuration;
         private readonly IWebHostEnvironment env;
-               private const string RedisCacheConnectionStringAppSettings = "Cms:RedisCacheConnectionString";
-        private const string GraphApiUrlAppSettings = "Cms:GraphApiUrl";
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
@@ -81,13 +75,9 @@ namespace DFC.App.JobGroups
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var cosmosDbConnectionJobGroup = configuration.GetSection(CosmosDbJobGroupConfigAppSettings).Get<CosmosDbConnection>();
-            //var cosmosDbConnectionSharedContent = configuration.GetSection(CosmosDbSharedContentConfigAppSettings).Get<CosmosDbConnection>();
+            var cosmosDbConnectionJobGroup = configuration.GetSection(CosmosDbJobGroupConfigAppSettings).Get<CosmosDbConnection>() ?? throw new ArgumentNullException();
             var cosmosRetryOptions = new RetryOptions { MaxRetryAttemptsOnThrottledRequests = 20, MaxRetryWaitTimeInSeconds = 60 };
             services.AddDocumentServices<JobGroupModel>(cosmosDbConnectionJobGroup, env.IsDevelopment(), cosmosRetryOptions);
-            // services.AddDocumentServices<ContentItemModel>(cosmosDbConnectionSharedContent, env.IsDevelopment(), cosmosRetryOptions);
-
-
             services.AddStackExchangeRedisCache(options => { options.Configuration = configuration.GetSection(RedisCacheConnectionStringAppSettings).Get<string>(); });
 
             services.AddHttpClient();
@@ -95,13 +85,12 @@ namespace DFC.App.JobGroups
             {
                 var option = new GraphQLHttpClientOptions()
                 {
-                    EndPoint = new Uri(configuration.GetSection(GraphApiUrlAppSettings).Get<string>()),
+                    EndPoint = new Uri(configuration.GetSection(GraphApiUrlAppSettings).Get<string>() ?? throw new ArgumentNullException()),
                     HttpMessageHandler = new CmsRequestHandler(s.GetService<IHttpClientFactory>(), s.GetService<IConfiguration>(), s.GetService<IHttpContextAccessor>()),
                 };
                 var client = new GraphQLHttpClient(option, new NewtonsoftJsonSerializer());
                 return client;
             });
-
 
             services.AddSingleton<ISharedContentRedisInterfaceStrategy<SharedHtml>, SharedHtmlQueryStrategy>();
 
@@ -113,19 +102,9 @@ namespace DFC.App.JobGroups
             services.AddHttpContextAccessor();
             services.AddHostedServiceTelemetryWrapper();
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddHostedService<SharedContentCacheReloadBackgroundService>();
             services.AddSubscriptionBackgroundService(configuration);
-            services.AddTransient<IJobGroupCacheRefreshService, JobGroupCacheRefreshService>();
-            services.AddTransient<IJobGroupPublishedRefreshService, JobGroupPublishedRefreshService>();
-            services.AddTransient<IWebhooksService, WebhooksService>();
-            services.AddTransient<IWebhooksContentService, WebhooksContentService>();
-            services.AddTransient<IWebhooksDeleteService, WebhooksDeleteService>();
-            //services.AddTransient<ISharedContentCacheReloadService, SharedContentCacheReloadService>();
             services.AddTransient<IApiConnector, ApiConnector>();
             services.AddTransient<IApiDataConnector, ApiDataConnector>();
-            services.AddSingleton(configuration.GetSection(nameof(EventGridClientOptions)).Get<EventGridClientOptions>() ?? new EventGridClientOptions());
-            services.AddTransient<IEventGridService, EventGridService>();
-            services.AddTransient<IEventGridClientService, EventGridClientService>();
 
             var policyOptions = configuration.GetSection(AppSettingsPolicies).Get<PolicyOptions>() ?? new PolicyOptions();
             var policyRegistry = services.AddPolicyRegistry();

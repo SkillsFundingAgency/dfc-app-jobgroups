@@ -7,13 +7,10 @@ using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq.Expressions;
 using System.Net;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using Xunit;
-using Moq;
 
 namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 {
@@ -35,7 +32,6 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(dummyJobGroupModel);
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).Returns(dummySideBarRightViewModel);
             A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty));
-
 
             // Act
             var result = await controller.SideBarRight(socRequestModel).ConfigureAwait(false);

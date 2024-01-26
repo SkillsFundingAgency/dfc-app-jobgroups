@@ -19,7 +19,6 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
         {
             FakeLogger = A.Fake<ILogger<PagesController>>();
             FakeJobGroupDocumentService = A.Fake<IDocumentService<JobGroupModel>>();
-            FakeSharedContentRedisInterface = A.Fake<ISharedContentRedisInterface>();
             FakeMapper = A.Fake<AutoMapper.IMapper>();
         }
 
@@ -40,11 +39,10 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
         };
 
         public ISharedContentRedisInterface FakeSharedContentDocumentService { get; private set; }
+
         protected ILogger<PagesController> FakeLogger { get; }
 
         protected IDocumentService<JobGroupModel> FakeJobGroupDocumentService { get; }
-
-        //protected IDocumentService<ContentItemModel> FakeSharedContentDocumentService { get; }
 
         protected ISharedContentRedisInterface FakeSharedContentRedisInterface { get; }
 
