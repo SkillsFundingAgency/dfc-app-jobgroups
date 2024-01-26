@@ -123,16 +123,16 @@
       "value": "__sharedLogAnalyticsResourceGroup__"
     },
     "CmsTokenEndPointUrl": {
-      "value": "__CmsTokenEndPointUrl__"
+      "value": "__StaxGraphqlTokenEndpointUrl__"
     },
     "CmsGraphApiUrl": {
-      "value": "__CmsGraphApiUrl__"
+      "value": "__StaxGraphqlApiUrl__"
     },
     "CmsClientId": {
-      "value": "__CmsClientId__"
+      "value": "__StaxGraphqlClientId__"
     },
     "CmsClientSecret": {
-      "value": "__CmsClientSecret__"
+      "value": "__StaxGraphqlClientSecret__"
     },
     "CmsRedisCacheConnectionString": {
       "value": "__RedisConnectionString__"
