@@ -38,8 +38,6 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             new string[] { MediaTypeNames.Application.Json },
         };
 
-        public ISharedContentRedisInterface FakeSharedContentDocumentService { get; private set; }
-
         protected ILogger<PagesController> FakeLogger { get; }
 
         protected IDocumentService<JobGroupModel> FakeJobGroupDocumentService { get; }
