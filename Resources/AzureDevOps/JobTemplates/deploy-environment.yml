@@ -85,6 +85,7 @@ jobs:
 - deployment: DeployRegistration
   displayName: "Deploy page registration"
   environment: ${{ parameters.EnvironmentName }}
+  condition: in('${{ parameters.EnvironmentName }}', 'DEV-DRAFT_AppJobGroups', 'LAB-DRAFT_AppJobGroups', 'SIT-DRAFT_AppJobGroups', 'PP-DRAFT_AppJobGroups', 'PRD-DRAFT_AppJobGroups')
   dependsOn:
   - DeployApplication
   strategy:

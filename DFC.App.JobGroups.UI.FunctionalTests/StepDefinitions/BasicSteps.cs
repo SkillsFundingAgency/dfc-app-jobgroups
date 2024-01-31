@@ -6,7 +6,6 @@
 using DFC.TestAutomation.UI.Extension;
 using OpenQA.Selenium;
 using System;
-using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace DFC.App.JobGroups.UI.FunctionalTests.StepDefinitions

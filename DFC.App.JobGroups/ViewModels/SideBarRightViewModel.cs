@@ -8,6 +8,6 @@ namespace DFC.App.JobGroups.ViewModels
     {
         public List<JobProfileViewModel>? JobProfiles { get; set; }
 
-        public SharedContentViewModel? SharedContent { get; set; }
+        public string? SharedContent { get; set; }
     }
 }

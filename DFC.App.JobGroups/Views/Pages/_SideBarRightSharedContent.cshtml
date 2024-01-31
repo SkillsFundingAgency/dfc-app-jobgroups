@@ -1,8 +1,8 @@
-﻿@model SharedContentViewModel
+﻿@model string
 
 <div class="job-profile-sidebar">
-    @if (Model.Markup?.Value != null)
+    @if (Model != null)
     {
-        @Html.Raw(Model.Markup.Value)
+        @Html.Raw(Model)
     }
 </div>
