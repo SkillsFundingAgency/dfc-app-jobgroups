@@ -1,11 +1,10 @@
-﻿using DFC.App.JobGroups.Data;
-using DFC.App.JobGroups.Data.Models.ContentModels;
-using DFC.App.JobGroups.Data.Models.JobGroupModels;
+﻿using DFC.App.JobGroups.Data.Models.JobGroupModels;
 using DFC.App.JobGroups.Extensions;
 using DFC.App.JobGroups.Models;
 using DFC.App.JobGroups.ViewModels;
+using DFC.Common.SharedContent.Pkg.Netcore.Interfaces;
+using DFC.Common.SharedContent.Pkg.Netcore.Model.ContentItems.SharedHtml;
 using DFC.Compui.Cosmos.Contracts;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,22 +19,23 @@ namespace DFC.App.JobGroups.Controllers
     {
         public const string RegistrationPath = "job-groups";
         public const string LocalPath = "pages";
+        public const string SharedContentStaxId = "2c9da1b3-3529-4834-afc9-9cd741e59788";
 
         private readonly ILogger<PagesController> logger;
         private readonly AutoMapper.IMapper mapper;
         private readonly IDocumentService<JobGroupModel> jobGroupDocumentService;
-        private readonly IDocumentService<ContentItemModel> sharedContentDocumentService;
+        private readonly ISharedContentRedisInterface sharedContentRedis;
 
         public PagesController(
             ILogger<PagesController> logger,
             AutoMapper.IMapper mapper,
             IDocumentService<JobGroupModel> jobGroupDocumentService,
-            IDocumentService<ContentItemModel> sharedContentDocumentService)
+            ISharedContentRedisInterface sharedContentRedis)
         {
             this.logger = logger;
             this.mapper = mapper;
             this.jobGroupDocumentService = jobGroupDocumentService;
-            this.sharedContentDocumentService = sharedContentDocumentService;
+            this.sharedContentRedis = sharedContentRedis;
         }
 
         [HttpGet]
@@ -201,12 +201,16 @@ namespace DFC.App.JobGroups.Controllers
                     }
                 }
 
-                var sharedContentAskAdviser = await sharedContentDocumentService.GetByIdAsync(Guid.Parse(Constants.SharedContentAskAdviserItemId)).ConfigureAwait(false);
-
-                viewModel.SharedContent = new SharedContentViewModel
+                try
                 {
-                    Markup = new HtmlString(sharedContentAskAdviser?.Content),
-                };
+                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>("SharedContent/" + SharedContentStaxId);
+
+                    viewModel.SharedContent = sharedhtml.Html;
+                }
+                catch (Exception e)
+                {
+                    viewModel.SharedContent = "<h1> Error Retrieving Data from Redis<h1><p>" + e.ToString() + "</p>";
+                }
 
                 logger.LogInformation($"{nameof(SideBarRight)} has succeeded for: {socRequest.Soc}");
 
