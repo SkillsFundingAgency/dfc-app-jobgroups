@@ -106,6 +106,12 @@
         },
         "EventGridSubjectPrefix": {
             "value": "EventGridSubjectPrefix"
+        },
+        "workspaceName": {
+            "value": "aTestLogAnalyticsAccount"
+        },
+        "workspaceResourceGroup": {
+            "value": "aResourceGroup"
         }
     }
 }

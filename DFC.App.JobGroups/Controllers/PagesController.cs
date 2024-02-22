@@ -43,6 +43,8 @@ namespace DFC.App.JobGroups.Controllers
         [Route("pages")]
         public async Task<IActionResult> Index()
         {
+            logger.LogInformation($"{nameof(Index)} has been called");
+
             var viewModel = new IndexViewModel()
             {
                 Path = LocalPath,
@@ -76,6 +78,8 @@ namespace DFC.App.JobGroups.Controllers
         [Route("pages/{soc}/document")]
         public async Task<IActionResult> Document(int soc)
         {
+            logger.LogInformation($"{nameof(Document)} has been called for: {soc}");
+
             var jobGroupModel = await jobGroupDocumentService.GetAsync(w => w.Soc == soc, soc.ToString(CultureInfo.InvariantCulture)).ConfigureAwait(false);
 
             if (jobGroupModel != null)
@@ -100,6 +104,8 @@ namespace DFC.App.JobGroups.Controllers
         [Route("pages/{soc}/{fromJobProfileCanonicalName}/head")]
         public async Task<IActionResult> Head(SocRequestModel socRequest)
         {
+            logger.LogInformation($"{nameof(Head)} has been called for: {socRequest}");
+
             var jobGroupModel = await jobGroupDocumentService.GetAsync(w => w.Soc == socRequest.Soc, socRequest.Soc.ToString(CultureInfo.InvariantCulture)).ConfigureAwait(false);
 
             if (jobGroupModel != null)
@@ -122,6 +128,8 @@ namespace DFC.App.JobGroups.Controllers
         [Route("pages/{soc}/{fromJobProfileCanonicalName}/breadcrumb")]
         public async Task<IActionResult> Breadcrumb(SocRequestModel socRequest)
         {
+            logger.LogInformation($"{nameof(Breadcrumb)} has been called for: {socRequest}");
+
             var jobGroupModel = await jobGroupDocumentService.GetAsync(w => w.Soc == socRequest.Soc, socRequest.Soc.ToString(CultureInfo.InvariantCulture)).ConfigureAwait(false);
 
             if (jobGroupModel != null)
@@ -153,6 +161,8 @@ namespace DFC.App.JobGroups.Controllers
         [Route("pages/{soc}/{fromJobProfileCanonicalName}/body")]
         public async Task<IActionResult> Body(SocRequestModel socRequest)
         {
+            logger.LogInformation($"{nameof(Body)} has been called for: {socRequest}");
+
             var jobGroupModel = await jobGroupDocumentService.GetAsync(w => w.Soc == socRequest.Soc, socRequest.Soc.ToString(CultureInfo.InvariantCulture)).ConfigureAwait(false);
 
             if (jobGroupModel != null)
@@ -174,6 +184,8 @@ namespace DFC.App.JobGroups.Controllers
         [Route("pages/{soc}/{fromJobProfileCanonicalName}/sidebarright")]
         public async Task<IActionResult> SideBarRight(SocRequestModel socRequest)
         {
+            logger.LogInformation($"{nameof(SideBarRight)} has been called for: {socRequest}");
+
             var jobGroupModel = await jobGroupDocumentService.GetAsync(w => w.Soc == socRequest.Soc, socRequest.Soc.ToString(CultureInfo.InvariantCulture)).ConfigureAwait(false);
 
             if (jobGroupModel != null)

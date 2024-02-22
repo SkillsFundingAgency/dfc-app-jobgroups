@@ -41,9 +41,10 @@ namespace DFC.App.JobGroups.HostedServices
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            logger.LogInformation("Cache reload executing");
+
             if (cmsApiClientOptions.BaseAddress != null)
             {
-                logger.LogInformation("Cache reload executing");
 
                 var task = hostedServiceTelemetryWrapper.Execute(() => cacheReloadService.ReloadAsync(stoppingToken), nameof(SharedContentCacheReloadBackgroundService));
 
@@ -59,6 +60,8 @@ namespace DFC.App.JobGroups.HostedServices
 
                 return task;
             }
+
+            logger.LogInformation("Base Address is null, aborting cache reload");
 
             return Task.CompletedTask;
         }

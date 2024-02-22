@@ -42,6 +42,7 @@ namespace DFC.App.Jobgroups.Controllers
             }
 
             var results = from a in jobGroups select mapper.Map<JobGroupSummaryItemModel>(a);
+            logger.LogInformation($"job-group summaries retrieved {results}");
 
             return results;
         }
