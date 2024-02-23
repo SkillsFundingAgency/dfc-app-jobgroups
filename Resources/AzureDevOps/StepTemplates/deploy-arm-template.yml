@@ -20,7 +20,7 @@ steps:
     Invoke-WebRequest -Uri "${{ parameters.SetEsfaResourceGroupTagsScript }}" -OutFile "${{ variables['System.DefaultWorkingDirectory']}}/Set-EsfaResourceGroupTags.ps1"
   displayName: "Download scripts from dfc-devops repo"
 
-- task: AzurePowerShell@3
+- task: AzurePowerShell@5
   displayName:  "Create resource groups with tags"
   inputs:
     azureSubscription: '${{ parameters.AzureSubscription }}'
