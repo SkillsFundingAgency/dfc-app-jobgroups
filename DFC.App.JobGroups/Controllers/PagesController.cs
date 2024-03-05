@@ -6,6 +6,7 @@ using DFC.Common.SharedContent.Pkg.Netcore.Interfaces;
 using DFC.Common.SharedContent.Pkg.Netcore.Model.ContentItems.SharedHtml;
 using DFC.Compui.Cosmos.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -25,17 +26,28 @@ namespace DFC.App.JobGroups.Controllers
         private readonly AutoMapper.IMapper mapper;
         private readonly IDocumentService<JobGroupModel> jobGroupDocumentService;
         private readonly ISharedContentRedisInterface sharedContentRedis;
+        private readonly IConfiguration configuration;
+        private string status;
 
         public PagesController(
             ILogger<PagesController> logger,
             AutoMapper.IMapper mapper,
             IDocumentService<JobGroupModel> jobGroupDocumentService,
-            ISharedContentRedisInterface sharedContentRedis)
+            ISharedContentRedisInterface sharedContentRedis,
+            IConfiguration configuration)
         {
             this.logger = logger;
             this.mapper = mapper;
             this.jobGroupDocumentService = jobGroupDocumentService;
             this.sharedContentRedis = sharedContentRedis;
+            this.configuration = configuration;
+
+            status = this.configuration.GetConnectionString("ContentMode:ContentMode");
+
+            if (string.IsNullOrEmpty(status))
+            {
+                status = "PUBLISHED";
+            }
         }
 
         [HttpGet]
@@ -203,7 +215,7 @@ namespace DFC.App.JobGroups.Controllers
 
                 try
                 {
-                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>("SharedContent/" + SharedContentStaxId);
+                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>("SharedContent/" + SharedContentStaxId, status);
 
                     viewModel.SharedContent = sharedhtml.Html;
                 }

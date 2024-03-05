@@ -5,6 +5,7 @@ using DFC.Compui.Cosmos.Contracts;
 using FakeItEasy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 
         protected ISharedContentRedisInterface FakeSharedContentRedisInterface { get; }
 
+        protected IConfiguration FakeConfiguration { get; }
+
         protected AutoMapper.IMapper FakeMapper { get; }
 
         protected PagesController BuildPagesController(string mediaTypeName)
@@ -52,7 +55,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 
             httpContext.Request.Headers[HeaderNames.Accept] = mediaTypeName;
 
-            var controller = new PagesController(FakeLogger, FakeMapper, FakeJobGroupDocumentService, FakeSharedContentRedisInterface)
+            var controller = new PagesController(FakeLogger, FakeMapper, FakeJobGroupDocumentService, FakeSharedContentRedisInterface, FakeConfiguration)
             {
                 ControllerContext = new ControllerContext()
                 {
