@@ -57,3 +57,5 @@ variables:
   value: https://dfc-sit-draft-app-jobgroups-as.$(FunctionAppDomain)/lmi-delta-report
 - name: EventGridSubjectPrefix
   value: /dfc-app-jobgroups/
+- name: ContentMode
+  value: DRAFT
