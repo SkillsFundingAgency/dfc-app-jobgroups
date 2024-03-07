@@ -42,7 +42,7 @@ namespace DFC.App.JobGroups.Controllers
             this.sharedContentRedis = sharedContentRedis;
             this.configuration = configuration;
 
-            status = configuration.GetSection("contentMode:contentMode").Get<string>();
+            status = configuration?.GetSection("contentMode:contentMode").Get<string>();
 
             if (string.IsNullOrEmpty(status))
             {
