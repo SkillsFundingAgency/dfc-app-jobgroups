@@ -127,7 +127,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"   ));
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             var statusResult = Assert.IsType<StatusCodeResult>(result);
 
