@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Constants = DFC.Common.SharedContent.Pkg.Netcore.Constant.ApplicationKeys;
 
 namespace DFC.App.JobGroups.Controllers
 {
@@ -20,7 +21,7 @@ namespace DFC.App.JobGroups.Controllers
     {
         public const string RegistrationPath = "job-groups";
         public const string LocalPath = "pages";
-        public const string SharedContentStaxId = "2c9da1b3-3529-4834-afc9-9cd741e59788";
+        //public const string SharedContentStaxId = "2c9da1b3-3529-4834-afc9-9cd741e59788";
 
         private readonly ILogger<PagesController> logger;
         private readonly AutoMapper.IMapper mapper;
@@ -215,7 +216,7 @@ namespace DFC.App.JobGroups.Controllers
 
                 try
                 {
-                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>("SharedContent/" + SharedContentStaxId, status);
+                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>(Constants.SpeakToAnAdviserSharedContent, status);
 
                     viewModel.SharedContent = sharedhtml.Html;
                 }
