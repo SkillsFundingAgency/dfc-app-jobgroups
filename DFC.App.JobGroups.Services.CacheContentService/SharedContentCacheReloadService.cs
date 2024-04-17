@@ -18,7 +18,6 @@ namespace DFC.App.JobGroups.Services.CacheContentService
     {
         private readonly ILogger<SharedContentCacheReloadService> logger;
         private readonly IMapper mapper;
-        //private readonly IDocumentService<ContentItemModel> contentItemDocumentService;
         private readonly ISharedContentRedisInterface sharedContentRedis;
         private readonly ICmsApiService cmsApiService;
         private readonly CmsApiClientOptions cmsApiClientOptions;
