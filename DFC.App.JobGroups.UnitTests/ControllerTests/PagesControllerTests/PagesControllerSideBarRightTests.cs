@@ -2,6 +2,7 @@ using DFC.App.JobGroups.Data.Models.ContentModels;
 using DFC.App.JobGroups.Data.Models.JobGroupModels;
 using DFC.App.JobGroups.Models;
 using DFC.App.JobGroups.ViewModels;
+using DFC.Common.SharedContent.Pkg.Netcore.Model.ContentItems.SharedHtml;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,7 +31,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(dummyJobGroupModel);
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).Returns(dummySideBarRightViewModel);
-            A.CallTo(() => FakeSharedContentDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).Returns(dummyContentItemModel);
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             // Act
             var result = await controller.SideBarRight(socRequestModel).ConfigureAwait(false);
@@ -38,7 +39,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => FakeSharedContentDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             var viewResult = Assert.IsType<ViewResult>(result);
             _ = Assert.IsAssignableFrom<SideBarRightViewModel>(viewResult.ViewData.Model);
@@ -62,7 +63,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(dummyJobGroupModel);
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).Returns(dummySideBarRightViewModel);
-            A.CallTo(() => FakeSharedContentDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).Returns(dummyContentItemModel);
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             // Act
             var result = await controller.SideBarRight(socRequestModel).ConfigureAwait(false);
@@ -70,7 +71,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => FakeSharedContentDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             var jsonResult = Assert.IsType<OkObjectResult>(result);
             _ = Assert.IsAssignableFrom<SideBarRightViewModel>(jsonResult.Value);
@@ -96,7 +97,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).MustNotHaveHappened();
-            A.CallTo(() => FakeSharedContentDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             var statusResult = Assert.IsType<NoContentResult>(result);
 
@@ -118,7 +119,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
 
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).Returns(dummyJobGroupModel);
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).Returns(dummySideBarRightViewModel);
-            A.CallTo(() => FakeSharedContentDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).Returns(dummyContentItemModel);
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             // Act
             var result = await controller.SideBarRight(socRequestModel).ConfigureAwait(false);
@@ -126,7 +127,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             // Assert
             A.CallTo(() => FakeJobGroupDocumentService.GetAsync(A<Expression<Func<JobGroupModel, bool>>>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
             A.CallTo(() => FakeMapper.Map<SideBarRightViewModel>(A<JobGroupModel>.Ignored)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => FakeSharedContentDocumentService.GetByIdAsync(A<Guid>.Ignored, A<string>.Ignored)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => FakeSharedContentRedisInterface.GetDataAsync<SharedHtml>(string.Empty, "PUBLISHED"));
 
             var statusResult = Assert.IsType<StatusCodeResult>(result);
 

@@ -62,7 +62,7 @@ namespace DFC.App.JobGroups.UnitTests.ControllerTests.PagesControllerTests
             httpContext.Request.Path = route;
             httpContext.Request.Headers[HeaderNames.Accept] = MediaTypeNames.Application.Json;
 
-            return new PagesController(FakeLogger, FakeMapper, FakeJobGroupDocumentService, FakeSharedContentDocumentService)
+            return new PagesController(FakeLogger, FakeMapper, FakeJobGroupDocumentService, FakeSharedContentRedisInterface, FakeConfiguration)
             {
                 ControllerContext = new ControllerContext
                 {

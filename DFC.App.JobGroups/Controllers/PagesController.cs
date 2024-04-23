@@ -1,18 +1,19 @@
-﻿using DFC.App.JobGroups.Data;
-using DFC.App.JobGroups.Data.Models.ContentModels;
-using DFC.App.JobGroups.Data.Models.JobGroupModels;
+﻿using DFC.App.JobGroups.Data.Models.JobGroupModels;
 using DFC.App.JobGroups.Extensions;
 using DFC.App.JobGroups.Models;
 using DFC.App.JobGroups.ViewModels;
+using DFC.Common.SharedContent.Pkg.Netcore.Interfaces;
+using DFC.Common.SharedContent.Pkg.Netcore.Model.ContentItems.SharedHtml;
 using DFC.Compui.Cosmos.Contracts;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Constants = DFC.Common.SharedContent.Pkg.Netcore.Constant.ApplicationKeys;
 
 namespace DFC.App.JobGroups.Controllers
 {
@@ -24,18 +25,29 @@ namespace DFC.App.JobGroups.Controllers
         private readonly ILogger<PagesController> logger;
         private readonly AutoMapper.IMapper mapper;
         private readonly IDocumentService<JobGroupModel> jobGroupDocumentService;
-        private readonly IDocumentService<ContentItemModel> sharedContentDocumentService;
+        private readonly ISharedContentRedisInterface sharedContentRedis;
+        private readonly IConfiguration configuration;
+        private string status;
 
         public PagesController(
             ILogger<PagesController> logger,
             AutoMapper.IMapper mapper,
             IDocumentService<JobGroupModel> jobGroupDocumentService,
-            IDocumentService<ContentItemModel> sharedContentDocumentService)
+            ISharedContentRedisInterface sharedContentRedis,
+            IConfiguration configuration)
         {
             this.logger = logger;
             this.mapper = mapper;
             this.jobGroupDocumentService = jobGroupDocumentService;
-            this.sharedContentDocumentService = sharedContentDocumentService;
+            this.sharedContentRedis = sharedContentRedis;
+            this.configuration = configuration;
+
+            status = configuration?.GetSection("contentMode:contentMode").Get<string>();
+
+            if (string.IsNullOrEmpty(status))
+            {
+                status = "PUBLISHED";
+            }
         }
 
         [HttpGet]
@@ -201,12 +213,16 @@ namespace DFC.App.JobGroups.Controllers
                     }
                 }
 
-                var sharedContentAskAdviser = await sharedContentDocumentService.GetByIdAsync(Guid.Parse(Constants.SharedContentAskAdviserItemId)).ConfigureAwait(false);
-
-                viewModel.SharedContent = new SharedContentViewModel
+                try
                 {
-                    Markup = new HtmlString(sharedContentAskAdviser?.Content),
-                };
+                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>(Constants.SpeakToAnAdviserSharedContent, status);
+
+                    viewModel.SharedContent = sharedhtml.Html;
+                }
+                catch (Exception e)
+                {
+                    viewModel.SharedContent = "<h1> Error Retrieving Data from Redis<h1><p>" + e.ToString() + "</p>";
+                }
 
                 logger.LogInformation($"{nameof(SideBarRight)} has succeeded for: {socRequest.Soc}");
 

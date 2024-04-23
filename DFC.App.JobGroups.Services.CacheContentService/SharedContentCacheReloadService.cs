@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DFC.Common.SharedContent.Pkg.Netcore.Interfaces;
 
 namespace DFC.App.JobGroups.Services.CacheContentService
 {
@@ -17,7 +18,7 @@ namespace DFC.App.JobGroups.Services.CacheContentService
     {
         private readonly ILogger<SharedContentCacheReloadService> logger;
         private readonly IMapper mapper;
-        private readonly IDocumentService<ContentItemModel> contentItemDocumentService;
+        private readonly ISharedContentRedisInterface sharedContentRedis;
         private readonly ICmsApiService cmsApiService;
         private readonly CmsApiClientOptions cmsApiClientOptions;
         private readonly IContentTypeMappingService contentTypeMappingService;
@@ -25,14 +26,14 @@ namespace DFC.App.JobGroups.Services.CacheContentService
         public SharedContentCacheReloadService(
             ILogger<SharedContentCacheReloadService> logger,
             IMapper mapper,
-            IDocumentService<ContentItemModel> contentItemDocumentService,
+           ISharedContentRedisInterface sharedContentRedis,
             ICmsApiService cmsApiService,
             CmsApiClientOptions cmsApiClientOptions,
             IContentTypeMappingService contentTypeMappingService)
         {
             this.logger = logger;
             this.mapper = mapper;
-            this.contentItemDocumentService = contentItemDocumentService;
+            this.sharedContentRedis = sharedContentRedis;
             this.cmsApiService = cmsApiService;
             this.cmsApiClientOptions = cmsApiClientOptions;
             this.contentTypeMappingService = contentTypeMappingService;
