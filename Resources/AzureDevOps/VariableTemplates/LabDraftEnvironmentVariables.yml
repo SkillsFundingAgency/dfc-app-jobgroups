@@ -37,22 +37,12 @@ variables:
   value: 2c9da1b3-3529-4834-afc9-9cd741e59788
 - name: EnableAzureMonitorAlerting
   value: true
-- name: aspTier
-  value: Standard
-- name: aspInstances
-  value: 2
-- name: aspSize
-  value: 2
 - name: clientAffinity
   value: false
 - name: jobgroupsAppDatabaseThroughput
   value: 1200
 - name: ExceptionCountThreshold
   value: 10
-- name: MemoryPercentageThreshold
-  value: 75
-- name: CPUPercentageThreshold
-  value: 75
 - name: EventGridPublishClientOptionsApiEndpoint
   value: https://dfc-lab-draft-app-jobgroups-as.$(FunctionAppDomain)/lmi-delta-report
 - name: EventGridSubjectPrefix
