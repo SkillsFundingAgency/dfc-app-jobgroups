@@ -8,20 +8,17 @@
     "appSharedStorageAccountName": {
       "value": "dfcdevappsharedstr"
     },
+    "appServiceName": {
+      "value": "dfc-foo-app-jobgroups-as-ver"
+    },
+    "appServicePlanSuffix": {
+      "value": "-migrated"
+    },
     "cosmosDBName": {
       "value": "dfc-dev-app-sharedresources-cdb"
     },
     "cosmosDbKey": {
       "value": "not-a-real-key"
-    },
-    "aspSize": {
-      "value": "2"
-    },
-    "aspTier": {
-      "value": "Standard"
-    },
-    "aspInstances": {
-      "value": 2
     },
     "clientAffinity": {
       "value": false
@@ -87,12 +84,6 @@
       "value": "jobgroups"
     },
     "ExceptionCountThreshold": {
-      "value": "0"
-    },
-    "MemoryPercentageThreshold": {
-      "value": "0"
-    },
-    "CPUPercentageThreshold": {
       "value": "0"
     },
     "EventGridAegSasKey": {
