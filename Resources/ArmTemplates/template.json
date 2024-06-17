@@ -132,7 +132,7 @@
   },
     "variables": {
         "ApiName": "[concat(parameters('ApimProductInstanceName'), '-', parameters('ApiName'))]",
-        "appServicePlanName": "[concat(variables('resourcePrefix'), parameters('appServicePlanSuffix), '-asp')]",
+        "appServicePlanName": "[concat(variables('resourcePrefix'), parameters('appServicePlanSuffix'), '-asp')]",
         "appServicePlanResourceGroup": "[concat(variables('resourcePrefix'),'-rg')]",
         "buildingBlocksDfcBaseUrl": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
         "cosmosDbCollectionPartitionKey": "/PartitionKey",
