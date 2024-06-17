@@ -4,6 +4,7 @@ using DFC.App.JobGroups.Data.Models.ClientOptions;
 using DFC.App.JobGroups.Data.Models.JobGroupModels;
 using DFC.App.JobGroups.Services.CacheContentService.Connectors;
 using DFC.Common.SharedContent.Pkg.Netcore;
+using DFC.Common.SharedContent.Pkg.Netcore.Constant;
 using DFC.Common.SharedContent.Pkg.Netcore.Infrastructure;
 using DFC.Common.SharedContent.Pkg.Netcore.Infrastructure.Strategy;
 using DFC.Common.SharedContent.Pkg.Netcore.Interfaces;
@@ -22,6 +23,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Documents.Client;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -92,14 +94,19 @@ namespace DFC.App.JobGroups
             {
                 var option = new GraphQLHttpClientOptions()
                 {
-                    EndPoint = new Uri(configuration.GetSection(GraphApiUrlAppSettings).Get<string>() ?? throw new ArgumentNullException()),
-                    HttpMessageHandler = new CmsRequestHandler(s.GetService<IHttpClientFactory>(), s.GetService<IConfiguration>(), s.GetService<IHttpContextAccessor>()),
+                    EndPoint = new Uri(configuration[ConfigKeys.GraphApiUrl] ??
+                throw new ArgumentNullException($"{nameof(ConfigKeys.GraphApiUrl)} is missing or has an invalid value.")),
+                    HttpMessageHandler = new CmsRequestHandler(
+                        s.GetService<IHttpClientFactory>(),
+                        s.GetService<IConfiguration>(),
+                        s.GetService<IHttpContextAccessor>(),
+                        s.GetService<IMemoryCache>()),
                 };
                 var client = new GraphQLHttpClient(option, new NewtonsoftJsonSerializer());
                 return client;
             });
 
-            services.AddSingleton<ISharedContentRedisInterfaceStrategy<SharedHtml>, SharedHtmlQueryStrategy>();
+            services.AddSingleton<ISharedContentRedisInterfaceStrategyWithRedisExpiry<SharedHtml>, SharedHtmlQueryStrategy>();
 
             services.AddSingleton<ISharedContentRedisInterfaceStrategyFactory, SharedContentRedisStrategyFactory>();
 
@@ -135,6 +142,7 @@ namespace DFC.App.JobGroups
                 })
                 .AddNewtonsoftJson();
         }
+
         private void ConfigureMinimumThreads()
         {
             var workerThreads = Convert.ToInt32(configuration[WorkerThreadsConfigAppSettings]);

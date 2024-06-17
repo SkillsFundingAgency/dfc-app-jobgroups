@@ -123,10 +123,13 @@
       "value": "200"
     },
     "IocpThreads": {
-        "value": "200"
+      "value": "200"
     },
     "ContentMode": {
       "value": "PUBLISHED"
+    },
+    "Expiry": {
+      "value": "4"
     }
   }
 }

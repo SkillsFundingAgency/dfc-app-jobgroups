@@ -22,12 +22,14 @@ namespace DFC.App.JobGroups.Controllers
         public const string RegistrationPath = "job-groups";
         public const string LocalPath = "pages";
 
+        private const string ExpiryAppSettings = "Cms:Expiry";
         private readonly ILogger<PagesController> logger;
         private readonly AutoMapper.IMapper mapper;
         private readonly IDocumentService<JobGroupModel> jobGroupDocumentService;
         private readonly ISharedContentRedisInterface sharedContentRedis;
         private readonly IConfiguration configuration;
         private string status;
+        private double expiry = 4;
 
         public PagesController(
             ILogger<PagesController> logger,
@@ -47,6 +49,12 @@ namespace DFC.App.JobGroups.Controllers
             if (string.IsNullOrEmpty(status))
             {
                 status = "PUBLISHED";
+            }
+
+            if (this.configuration != null)
+            {
+                string expiryAppString = this.configuration.GetSection(ExpiryAppSettings).Get<string>();
+                this.expiry = double.Parse(string.IsNullOrEmpty(expiryAppString) ? "4" : expiryAppString);
             }
         }
 
@@ -215,7 +223,7 @@ namespace DFC.App.JobGroups.Controllers
 
                 try
                 {
-                    var sharedhtml = await sharedContentRedis.GetDataAsync<SharedHtml>(Constants.SpeakToAnAdviserSharedContent, status);
+                    var sharedhtml = await sharedContentRedis.GetDataAsyncWithExpiry<SharedHtml>(Constants.SpeakToAnAdviserSharedContent, status, expiry);
 
                     viewModel.SharedContent = sharedhtml.Html;
                 }
