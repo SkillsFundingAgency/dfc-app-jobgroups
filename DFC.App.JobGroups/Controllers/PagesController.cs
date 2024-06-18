@@ -225,7 +225,7 @@ namespace DFC.App.JobGroups.Controllers
 
                 try
                 {
-                    var sharedhtml = await sharedContentRedis.GetDataAsyncWithExpiry<SharedHtml>(Constants.SpeakToAnAdviserSharedContent, status, expiry);
+                    var sharedhtml = await sharedContentRedis.GetDataAsyncWithExpiry<SharedHtml>(Constants.SpeakToAnAdviserSharedContent, status, expiryInHours);
 
                     viewModel.SharedContent = sharedhtml.Html;
                 }
