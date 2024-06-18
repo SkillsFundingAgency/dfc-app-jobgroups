@@ -53,11 +53,12 @@ namespace DFC.App.JobGroups.Controllers
 
             if (this.configuration != null)
             {
-                string expiryAppStringParseResult = this.configuration.GetSection(ExpiryAppSettings).Get<string>();
-                if (double.TryParse(expiryAppStringParseResult, out expiryInHours))
+                string expiryAppString = this.configuration.GetSection(ExpiryAppSettings).Get<string>();
+                if (double.TryParse(expiryAppString, out var expiryAppStringParseResult))
                 {
+                    expiryInHours = expiryAppStringParseResult;
                 }
-             }
+            }
         }
 
         [HttpGet]
