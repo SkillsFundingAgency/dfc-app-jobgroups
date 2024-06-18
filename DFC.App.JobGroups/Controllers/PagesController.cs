@@ -29,7 +29,7 @@ namespace DFC.App.JobGroups.Controllers
         private readonly ISharedContentRedisInterface sharedContentRedis;
         private readonly IConfiguration configuration;
         private string status;
-        private double expiry = 4;
+        private double expiryInHours = 4;
 
         public PagesController(
             ILogger<PagesController> logger,
@@ -54,8 +54,10 @@ namespace DFC.App.JobGroups.Controllers
             if (this.configuration != null)
             {
                 string expiryAppString = this.configuration.GetSection(ExpiryAppSettings).Get<string>();
-                this.expiry = double.Parse(string.IsNullOrEmpty(expiryAppString) ? "4" : expiryAppString);
-            }
+                if (double.TryParse(expiryAppString, out expiryInHours))
+                {
+                }
+             }
         }
 
         [HttpGet]
