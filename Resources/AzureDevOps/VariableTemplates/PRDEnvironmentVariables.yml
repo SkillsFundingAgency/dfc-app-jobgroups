@@ -2,7 +2,9 @@ variables:
 - name: ReleaseEnvironmentName
   value: prd
 - name: AppServiceName
-  value: $(WebAppPrefix)-as
+  value: $(WebAppPrefix)-as-ver2
+- name: AppServicePlanSuffix
+  value: -migrated
 - name: cosmosDbCollectionName
   value: job-groups
 - name: sharedContentDbCollectionName
@@ -18,7 +20,7 @@ variables:
 - name: contentUrl
   value: $(ContentApiAddress)/api/execute
 - name: subscriptionUrl
-  value: https://dfc-prd-api-eventgridsubscriptions-fa.$(appServiceDomain)
+  value: https://dfc-prd-api-eventgridsubscriptions-fa-ver2.$(appServiceDomain)
 - name: SubscriptionSettingsEndpoint
   value: $(ApimProxyAddress)/composite-ui/jobgroups
 - name: apiName
@@ -40,7 +42,7 @@ variables:
 - name: ExceptionCountThreshold
   value: 10
 - name: EventGridPublishClientOptionsApiEndpoint
-  value: https://dfc-prd-app-jobgroups-as.$(FunctionAppDomain)/lmi-delta-report
+  value: https://dfc-prd-app-jobgroups-as-ver2.$(FunctionAppDomain)/lmi-delta-report
 - name: EventGridSubjectPrefix
   value: /dfc-app-jobgroups/
 - name: ContentMode
