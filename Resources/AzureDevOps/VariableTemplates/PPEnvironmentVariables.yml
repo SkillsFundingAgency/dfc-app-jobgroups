@@ -47,3 +47,5 @@ variables:
   value: /dfc-app-jobgroups/
 - name: ContentMode
   value: PUBLISHED
+- name: Expiry
+  value: 4

@@ -51,3 +51,5 @@ variables:
   value: /dfc-app-jobgroups/
 - name: ContentMode
   value: DRAFT
+- name: Expiry
+  value: 4
